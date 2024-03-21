@@ -1,18 +1,14 @@
 <script setup>
-import NavView from "@/components/NavComponent.vue";
-
-
+import HomeView from "@/views/HomeView.vue";
 
 </script>
 
 <template>
-  <NavView />
+
+<HomeView/>
 
 </template>
 
-<style>
-body{
-  background-color: red;
-}
+<style scoped>
 
 </style>
