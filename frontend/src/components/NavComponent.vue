@@ -1,35 +1,22 @@
 <script setup>
+import Menubar from 'primevue/menubar';
+
+const items = [
+  { label: 'Home', icon: 'pi pi-home', routerLink: '/' },
+  { label: 'About', icon: 'pi pi-info', routerLink: '/about' },
+  { label: 'Services', icon: 'pi pi-cog', routerLink: '/services' },
+  { label: 'Contact', icon: 'pi pi-envelope', routerLink: '/contact' },
+  { label: 'Login', icon: 'pi pi-envelope', routerLink: '/login' },
+  { label: 'Logout', icon: 'pi pi-envelope', routerLink: '/logout' }
+];
+
 </script>
 
 <template>
-  <section>
-  <nav><li>Bestellliste</li><li>Klassenübersicht</li><li>Bestellübersicht</li></nav>
-  </section>
-
-
+  <Menubar :model="items" />
 </template>
 
 <style scoped>
 
-body{
 
-}
-
-section{
-  width: 100%;
-  background-color: aqua;
-  border-radius: 200px !important;
-  display: table;
-}
-
-nav{
-
-}
-
-li{
-  font-family: "Georgia Pro Cond Light",serif;
-  font-size: 25px;
-  list-style: none;
-  width:33%;
-}
 </style>

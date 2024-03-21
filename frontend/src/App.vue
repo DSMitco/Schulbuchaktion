@@ -1,14 +1,18 @@
 <script setup>
-import NavComponent from "@/components/NavComponent.vue";
+import NavView from "@/components/NavComponent.vue";
+
+
 
 </script>
 
 <template>
-<NavComponent/>
-  <Button>Hallo</Button>
+  <NavView />
 
 </template>
 
-<style scoped>
+<style>
+body{
+  background-color: red;
+}
 
 </style>
