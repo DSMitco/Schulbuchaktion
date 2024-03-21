@@ -2,8 +2,8 @@
 import NavView from "@/components/NavComponent.vue";
 
 
-</script>
 
+</script>
 
 <template>
   <NavView />
