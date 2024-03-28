@@ -2,21 +2,32 @@
 import Menubar from 'primevue/menubar';
 
 const items = [
-  { label: 'Home', icon: 'pi pi-home', routerLink: '/' },
-  { label: 'About', icon: 'pi pi-info', routerLink: '/about' },
-  { label: 'Services', icon: 'pi pi-cog', routerLink: '/services' },
-  { label: 'Contact', icon: 'pi pi-envelope', routerLink: '/contact' },
-  { label: 'Login', icon: 'pi pi-envelope', routerLink: '/login' },
-  { label: 'Logout', icon: 'pi pi-envelope', routerLink: '/logout' }
-];
+  { label: 'Startseite', routerLink: '/' },
+  { label: 'Import', routerLink: '/import' },
+  { label: 'Logout', routerLink: '/logout' }
+]
 
 </script>
 
 <template>
-  <Menubar :model="items" />
+  <Menubar :model="items" class="menubar">
+    <template #start>
+      <a href="/">
+        <img src="./icons/book_icon.png" alt="icon book" class="icon-book" />
+      </a>
+    </template>
+  </Menubar>
 </template>
 
-<style scoped>
 
+<style scoped>
+.icon-book{
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+}
+.menubar {
+  background-color: #EFF1F3;
+}
 
 </style>

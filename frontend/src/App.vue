@@ -1,18 +1,17 @@
 <script setup>
-import NavView from "@/components/NavComponent.vue";
-
+import Nav from "@/components/NavComponent.vue";
+import Footer from "@/components/FooterComponent.vue"
 
 
 </script>
 
 <template>
-  <NavView />
+  <Nav />
 
+  <Footer />
 </template>
 
 <style>
-body{
-  background-color: red;
-}
+@import 'assets/main.css';
 
 </style>
