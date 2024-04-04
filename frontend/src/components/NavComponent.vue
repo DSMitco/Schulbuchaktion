@@ -1,30 +1,38 @@
 <script setup>
+import Menubar from 'primevue/menubar';
+import 'primevue/resources/themes/aura-dark-amber/theme.css'
+
+const items = [
+  { label: 'Startseite', routerLink: '/' },
+  { label: 'Import', routerLink: '/import' },
+  { label: 'Logout', routerLink: '/logout', class: 'wh' }
+]
+
 </script>
 
 <template>
-  <section>
-  <nav><li>Bestellliste</li><li>Klassenübersicht</li><li>Bestellübersicht</li></nav>
-  </section>
-
-
+  <Menubar :model="items" class="menubar">
+    <template #start>
+      <a href="/">
+        <img src="./icons/book_icon.png" alt="icon book" class="icon-book" />
+      </a>
+    </template>
+  </Menubar>
 </template>
 
+
 <style scoped>
-
-body{
+.icon-book{
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+}
+.menubar {
+  background-color: #4C4A51;
+}
+.test{
 
 }
 
 
-
-nav{
-
-}
-
-li{
-  font-family: "Georgia Pro Cond Light",serif;
-  font-size: 25px;
-  list-style: none;
-  width:33%;
-}
 </style>

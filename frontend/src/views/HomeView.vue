@@ -1,9 +1,25 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import NavView from "@/components/NavComponent.vue";
+import MenuComponent from "@/components/MenuComponent.vue";
+import Classlist from "@/views/Classlist.vue";
+
+
+
+
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+
+  <MenuComponent class="menu"/>
+  <Classlist/>
+
+
 </template>
+
+<style scoped>
+
+.menu {
+ margin-top:2%;
+}
+
+</style>

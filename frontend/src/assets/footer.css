@@ -1,0 +1,102 @@
+.container{
+    max-width: 74rem;
+    margin:auto;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+}
+ul{
+    list-style: none;
+    padding-left: 0;
+}
+.footer{
+    background-color: #4C4A51;
+    padding: 1rem 0;
+}
+.footer-col{
+    width: 50%;
+    padding: 0 1rem;
+}
+.footer-col h4{
+    font-size: 1.25rem;
+    color: #ffffff;
+    text-transform: capitalize;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    position: relative;
+}
+.footer-col h4::before{
+    content: '';
+    position: absolute;
+    left:0;
+    bottom: -0.5rem;
+    background-color: #AC6ECE;
+    height: 0.15rem;
+    box-sizing: border-box;
+    width: 3.5rem;
+}
+.footer-col ul li:not(:last-child){
+    margin-bottom: 0.55rem;
+}
+.footer-col ul li a{
+    font-size: 1rem;
+    text-transform: capitalize;
+    text-decoration: none;
+    font-weight: 300;
+    color: #bbbbbb;
+    display: block;
+    transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+    color: #ffffff;
+    padding-left: 0.35rem;
+}
+.footer-col .social-links a{
+    display: inline-block;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: rgba(255,255,255,0.2);
+    margin:0 0.8rem 0.8rem 0;
+    text-align: center;
+    line-height: 2.5rem;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+    color: #24262b;
+    background-color: #ffffff;
+}
+
+.copyright {
+    margin-top: 1.5rem;
+    color: white;
+}
+
+/* Images (Icons) */
+
+.htl-steyr {
+    background-image: url("../components/icons/HTL_Steyr_Logo.jpg");
+    display: inline-block;
+    background-size: 100%;
+}
+
+.sba {
+    background-image: url("../components/icons/sba.jpg");
+    display: inline-block;
+    background-size: 100%;
+}
+
+/*responsive*/
+@media(max-width: 47rem){
+    .footer-col{
+        width: 50%;
+        margin-bottom: 2rem;
+    }
+}
+@media(max-width: 35rem){
+    .footer-col{
+        width: 100%;
+    }
+}
