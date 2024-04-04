@@ -11,16 +11,16 @@ class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "user_id")]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name: "short_name", length: 255)]
     private ?string $shortname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name: "first_name", length: 255)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name: "last_name", length: 255)]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]

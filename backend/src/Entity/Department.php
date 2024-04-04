@@ -5,13 +5,15 @@ namespace App\Entity;
 use App\Repository\DepartmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: DepartmentRepository::class)]
 class Department
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "department_id")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -20,14 +22,19 @@ class Department
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $budget = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[ORM\Column(name: "used_budget", type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $usedbudget = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $umew = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $headofdepartmentid = null;
+    #[ORM\OneToOne(targetEntity: User::class, cascade: ["persist", "remove"])]
+    #[ORM\JoinColumn(name: "head_of_department", referencedColumnName: "user_id", nullable: false)]
+    private ?User $headofdepartment = null;
+
+    // This will not be a column in the database
+    #[ORM\OneToMany(targetEntity: Schoolclass::class, mappedBy: "department")]
+    private Collection $schoolclasses;
 
     public function getId(): ?int
     {
@@ -82,14 +89,46 @@ class Department
         return $this;
     }
 
-    public function getHeadofdepartmentid(): ?string
+    public function getHeadofdepartment(): ?User
     {
-        return $this->headofdepartmentid;
+        return $this->headofdepartment;
     }
 
-    public function setHeadofdepartmentid(string $headofdepartmentid): static
+    public function setHeadofdepartment(User $headofdepartment): static
     {
-        $this->headofdepartmentid = $headofdepartmentid;
+        $this->headofdepartment = $headofdepartment;
+
+        return $this;
+    }
+
+    public function __construct()
+    {
+        $this->schoolclasses = new ArrayCollection();
+    }
+
+    public function getSchoolclasses(): Collection
+    {
+        return $this->schoolclasses;
+    }
+
+    public function addSchoolclass(Schoolclass $schoolclass): self
+    {
+        if (!$this->schoolclasses->contains($schoolclass)) {
+            $this->schoolclasses[] = $schoolclass;
+            $schoolclass->setDepartment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchoolclass(Schoolclass $schoolclass): self
+    {
+        if ($this->schoolclasses->removeElement($schoolclass)) {
+            // set the owning side to null (unless already changed)
+            if ($schoolclass->getDepartment() === $this) {
+                $schoolclass->setDepartment(null);
+            }
+        }
 
         return $this;
     }

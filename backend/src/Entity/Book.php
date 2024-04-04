@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -12,13 +14,14 @@ class Book
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "book_id")]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $bnr = null;
 
     #[ORM\Column(length: 255)]
+    #[ORM\JoinColumn(name: "short_title")]
     private ?string $shorttitle = null;
 
     #[ORM\Column(length: 255)]
@@ -28,6 +31,7 @@ class Book
     private ?string $listtype = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[ORM\JoinColumn(name: "school_form")]
     private ?string $schoolform = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -37,19 +41,27 @@ class Book
     private ?Boolean $ebook = null;
 
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    #[ORM\JoinColumn(name: "ebook_plus")]
     private ?Boolean $ebookplus = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
+    #[ORM\JoinColumn(name: "mainbook_id")]
     private ?string $mainbookid = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $bookpriceid = null;
+    #[ORM\OneToOne(targetEntity: Bookprice::class, cascade: ["persist", "remove"])]
+    #[ORM\JoinColumn(name: "book_price_id", referencedColumnName: "book_price_id")]
+    private ?Bookprice $bookprice = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $subjectid = null;
+    #[ORM\ManyToOne(targetEntity: Subject::class, inversedBy: "books")]
+    #[ORM\JoinColumn(name: "subject_id", referencedColumnName: "subject_id")]
+    private ?Subject $subject = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $publisherid = null;
+    #[ORM\ManyToOne(targetEntity: Publisher::class, inversedBy: "books")]
+    #[ORM\JoinColumn(name: "publisher_id", referencedColumnName: "publisher_id")]
+    private ?Publisher $publisher = null;
+
+    #[ORM\OneToMany(targetEntity: Bookorder::class, mappedBy: "book")]
+    private Collection $bookorders;
 
     public function getId(): ?int
     {
@@ -164,39 +176,98 @@ class Book
         return $this;
     }
 
-    public function getBookpriceid(): ?string
+    public function getBookprice(): ?Bookprice
     {
-        return $this->bookpriceid;
+        return $this->bookprice;
     }
 
-    public function setBookpriceid(string $bookpriceid): static
+    public function setBookprice(?Bookprice $bookprice): self
     {
-        $this->bookpriceid = $bookpriceid;
+        $this->bookprice = $bookprice;
 
         return $this;
     }
 
-    public function getSubjectid(): ?string
+    public function getSubject(): ?Subject
     {
-        return $this->subjectid;
+        return $this->subject;
     }
 
-    public function setSubjectid(string $subjectid): static
+    public function setSubject(?Subject $subject): self
     {
-        $this->subjectid = $subjectid;
+        $this->subject = $subject;
 
         return $this;
     }
 
-    public function getPublisherid(): ?string
+    public function getPublisher(): ?Publisher
     {
-        return $this->publisherid;
+        return $this->publisher;
     }
 
-    public function setPublisherid(string $publisherid): static
+    public function setPublisher(?Publisher $publisher): self
     {
-        $this->publisherid = $publisherid;
+        $this->publisher = $publisher;
 
         return $this;
     }
+
+
+    public function __construct()
+    {
+        $this->bookorders = new ArrayCollection();
+        $this->grades = new ArrayCollection();
+    }
+
+
+    public function getBookorders(): Collection
+    {
+        return $this->bookorders;
+    }
+
+    public function addBookorder(Bookorder $bookorder): self
+    {
+        if (!$this->bookorders->contains($bookorder)) {
+            $this->bookorders[] = $bookorder;
+            $bookorder->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookorder(Bookorder $bookorder): self
+    {
+        if ($this->bookorders->removeElement($bookorder)) {
+            if ($bookorder->getBook() === $this) {
+                $bookorder->setBook(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getGrades(): Collection
+    {
+        return $this->grades;
+    }
+
+    public function addGrade(Schoolgrade $grade): self
+    {
+        if (!$this->grades->contains($grade)) {
+            $this->grades[] = $grade;
+            $grade->addBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGrade(Schoolgrade $grade): self
+    {
+        if ($this->grades->removeElement($grade)) {
+            $grade->removeBook($this);
+        }
+
+        return $this;
+    }
+
 }

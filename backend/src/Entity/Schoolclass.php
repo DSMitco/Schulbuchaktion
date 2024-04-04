@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SchoolclassRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,7 +13,7 @@ class Schoolclass
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "schoolclass_id")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -20,13 +22,13 @@ class Schoolclass
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $grade = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[ORM\Column(name: "students_amount", type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $studentsamount = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[ORM\Column(name: "rep_amount", type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $repamount = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[ORM\Column(name: "used_budget", type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $usedbudget = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
@@ -38,8 +40,12 @@ class Schoolclass
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $profile = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $departmentid = null;
+    #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: "schoolclasses")]
+    #[ORM\JoinColumn(name: "department_id", referencedColumnName: "department_id", nullable: false)]
+    private ?Department $department = null;
+
+    #[ORM\OneToMany(targetEntity: Bookorder::class, mappedBy: "schoolclass")]
+    private Collection $bookorders;
 
     public function getId(): ?int
     {
@@ -142,14 +148,45 @@ class Schoolclass
         return $this;
     }
 
-    public function getDepartmentid(): ?string
+    public function getDepartment(): ?Department
     {
-        return $this->departmentid;
+        return $this->department;
     }
 
-    public function setDepartmentid(string $departmentid): static
+    public function setDepartment(Department $department): static
     {
-        $this->departmentid = $departmentid;
+        $this->department = $department;
+
+        return $this;
+    }
+
+    public function __construct()
+    {
+        $this->bookorders = new ArrayCollection();
+    }
+
+    public function getBookorders(): Collection
+    {
+        return $this->bookorders;
+    }
+
+    public function addBookorder(Bookorder $bookorder): self
+    {
+        if (!$this->bookorders->contains($bookorder)) {
+            $this->bookorders[] = $bookorder;
+            $bookorder->setSchoolclass($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookorder(Bookorder $bookorder): self
+    {
+        if ($this->bookorders->removeElement($bookorder)) {
+            if ($bookorder->getSchoolclass() === $this) {
+                $bookorder->setSchoolclass(null);
+            }
+        }
 
         return $this;
     }

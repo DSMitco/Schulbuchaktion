@@ -5,23 +5,28 @@ namespace App\Entity;
 use App\Repository\SubjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: SubjectRepository::class)]
 class Subject
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "subject_id")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[ORM\JoinColumn(name: "short_name")]
     private ?string $shortname = null;
 
     #[ORM\Column(length: 255)]
+    #[ORM\JoinColumn(name: "full_name")]
     private ?string $fullname = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $headofsubjectid = null;
+    #[ORM\OneToOne(targetEntity: User::class, cascade: ["persist", "remove"])]
+    #[ORM\JoinColumn(name: "head_of_subject_id", referencedColumnName: "user_id", nullable: false)]
+    private ?User $headofsubjectid = null;
 
     public function getId(): ?int
     {
@@ -52,15 +57,28 @@ class Subject
         return $this;
     }
 
-    public function getHeadofsubjectid(): ?string
+    public function getHeadofsubjectid(): ?User
     {
         return $this->headofsubjectid;
     }
 
-    public function setHeadofsubjectid(string $headofsubjectid): static
+    public function setHeadofsubjectid(User $headofsubjectid): static
     {
         $this->headofsubjectid = $headofsubjectid;
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->headofsubjectid;
+    }
+
+    public function setUser(User $user): static
+    {
+        $this->headofsubjectid = $user;
+
+        return $this;
+    }
+
 }

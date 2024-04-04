@@ -11,23 +11,26 @@ class Bookprice
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "book_price_id")]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $year = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[ORM\JoinColumn(name: "price_inclusive_ebook")]
     private ?string $priceinclusiveebook = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
+    #[ORM\JoinColumn(name: "price_ebook")]
     private ?string $priceebook = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
+    #[ORM\JoinColumn(name: "ebook_plus_price")]
     private ?string $ebookplusprice = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $bookid = null;
+    #[ORM\OneToOne(targetEntity: Book::class, mappedBy: "bookprice", cascade: ["persist", "remove"])]
+    private ?Book $book = null;
 
     public function getId(): ?int
     {
@@ -82,14 +85,14 @@ class Bookprice
         return $this;
     }
 
-    public function getBookid(): ?string
+    public function getBook(): ?Book
     {
-        return $this->bookid;
+        return $this->book;
     }
 
-    public function setBookid(?string $bookid): static
+    public function setBook(?Book $book): self
     {
-        $this->bookid = $bookid;
+        $this->book = $book;
 
         return $this;
     }

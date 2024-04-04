@@ -12,7 +12,7 @@ class Bookorder
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: "book_order_id")]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
@@ -25,13 +25,16 @@ class Bookorder
     private ?Boolean $ebook = null;
 
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    #[ORM\JoinColumn(name: "ebook_plus")]
     private ?Boolean $ebookplus = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $schoolclassid = null;
+    #[ORM\ManyToOne(targetEntity: Schoolclass::class, inversedBy: "bookorders")]
+    #[ORM\JoinColumn(name: "schoolclass_id", referencedColumnName: "schoolclass_id", nullable: false)]
+    private ?Schoolclass $schoolclass = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?string $bookid = null;
+    #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: "bookorders")]
+    #[ORM\JoinColumn(name: "book_id", referencedColumnName: "book_id", nullable: false)]
+    private ?Book $book = null;
 
     public function getId(): ?int
     {
@@ -62,30 +65,6 @@ class Bookorder
         return $this;
     }
 
-    public function getSchoolclassid(): ?string
-    {
-        return $this->schoolclassid;
-    }
-
-    public function setSchoolclassid(string $schoolclassid): static
-    {
-        $this->schoolclassid = $schoolclassid;
-
-        return $this;
-    }
-
-    public function getBookid(): ?string
-    {
-        return $this->bookid;
-    }
-
-    public function setBookid(string $bookid): static
-    {
-        $this->bookid = $bookid;
-
-        return $this;
-    }
-
     public function getEbook(): ?bool
     {
         return $this->ebook;
@@ -105,5 +84,27 @@ class Bookorder
     {
         $this->ebookplus = $ebookplus;
     }
+
+    public function getSchoolclass(): ?Schoolclass
+    {
+        return $this->schoolclass;
+    }
+
+    public function setSchoolclass(?Schoolclass $schoolclass): void
+    {
+        $this->schoolclass = $schoolclass;
+    }
+
+    public function getBook(): ?Book
+    {
+        return $this->book;
+    }
+
+    public function setBook(?Book $book): void
+    {
+        $this->book = $book;
+    }
+
+
 
 }
