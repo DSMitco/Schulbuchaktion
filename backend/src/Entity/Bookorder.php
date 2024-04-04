@@ -32,7 +32,7 @@ class Bookorder
     private ?Schoolclass $schoolclass = null;
 
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: "bookorders")]
-    #[ORM\JoinColumn(name: "book_id", referencedColumnName: "book_id", nullable: false)]
+    #[ORM\JoinColumn(name: "book_id", referencedColumnName: "id", nullable: false)]
     private ?Book $book = null;
 
     public function getId(): ?int

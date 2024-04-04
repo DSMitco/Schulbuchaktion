@@ -8,13 +8,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
+use function Doctrine\ORM\Mapping\JoinColumn;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: "book_id")]
+    #[ORM\Column(name: "id")]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
@@ -56,8 +57,9 @@ class Book
     #[ORM\JoinColumn(name: "publisher_id", referencedColumnName: "publisher_id")]
     private ?Publisher $publisher = null;
 
-    #[ORM\OneToMany(targetEntity: BookSchoolGrade::class, mappedBy: "book")]
-    private $grades;
+    #[ORM\ManyToMany(targetEntity: Schoolgrade::class, inversedBy: "books")]
+    #[ORM\JoinTable(name: "book_schoolgrade")]
+    private Collection $grades;
 
     #[ORM\OneToMany(targetEntity: Bookorder::class, mappedBy: "book")]
     private Collection $bookorders;
