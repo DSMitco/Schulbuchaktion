@@ -1,10 +1,11 @@
 <script setup>
 import Menubar from 'primevue/menubar';
+import 'primevue/resources/themes/aura-dark-amber/theme.css'
 
 const items = [
   { label: 'Startseite', routerLink: '/' },
   { label: 'Import', routerLink: '/import' },
-  { label: 'Logout', routerLink: '/logout' }
+  { label: 'Logout', routerLink: '/logout', class: 'wh' }
 ]
 
 </script>
@@ -27,7 +28,11 @@ const items = [
   margin-right: 1rem;
 }
 .menubar {
-  background-color: #EFF1F3;
+  background-color: #4C4A51;
+}
+
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
+  color: white;
 }
 
 </style>
