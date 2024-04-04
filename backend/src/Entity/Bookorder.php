@@ -24,8 +24,7 @@ class Bookorder
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     private ?Boolean $ebook = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
-    #[ORM\JoinColumn(name: "ebook_plus")]
+    #[ORM\Column(name: "ebook_plus", type: Types::BOOLEAN, options: ['default' => false])]
     private ?Boolean $ebookplus = null;
 
     #[ORM\ManyToOne(targetEntity: Schoolclass::class, inversedBy: "bookorders")]

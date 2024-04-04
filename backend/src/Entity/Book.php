@@ -20,8 +20,7 @@ class Book
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $bnr = null;
 
-    #[ORM\Column(length: 255)]
-    #[ORM\JoinColumn(name: "short_title")]
+    #[ORM\Column(name: "short_title", length: 255)]
     private ?string $shorttitle = null;
 
     #[ORM\Column(length: 255)]
@@ -30,8 +29,7 @@ class Book
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $listtype = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    #[ORM\JoinColumn(name: "school_form")]
+    #[ORM\Column(name: "school_form", type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $schoolform = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -40,12 +38,10 @@ class Book
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     private ?Boolean $ebook = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
-    #[ORM\JoinColumn(name: "ebook_plus")]
+    #[ORM\Column(name: "ebook_plus", type: Types::BOOLEAN, options: ['default' => false])]
     private ?Boolean $ebookplus = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
-    #[ORM\JoinColumn(name: "mainbook_id")]
+    #[ORM\Column(name: "mainbook_id", type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $mainbookid = null;
 
     #[ORM\OneToOne(targetEntity: Bookprice::class, cascade: ["persist", "remove"])]
@@ -59,6 +55,9 @@ class Book
     #[ORM\ManyToOne(targetEntity: Publisher::class, inversedBy: "books")]
     #[ORM\JoinColumn(name: "publisher_id", referencedColumnName: "publisher_id")]
     private ?Publisher $publisher = null;
+
+    #[ORM\OneToMany(targetEntity: BookSchoolGrade::class, mappedBy: "book")]
+    private $grades;
 
     #[ORM\OneToMany(targetEntity: Bookorder::class, mappedBy: "book")]
     private Collection $bookorders;

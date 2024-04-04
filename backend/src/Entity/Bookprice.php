@@ -17,16 +17,13 @@ class Bookprice
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $year = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    #[ORM\JoinColumn(name: "price_inclusive_ebook")]
+    #[ORM\Column(name: "price_inclusive_ebook", type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $priceinclusiveebook = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
-    #[ORM\JoinColumn(name: "price_ebook")]
+    #[ORM\Column(name: "price_ebook", type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $priceebook = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
-    #[ORM\JoinColumn(name: "ebook_plus_price")]
+    #[ORM\Column(name: "ebook_plus_price", type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $ebookplusprice = null;
 
     #[ORM\OneToOne(targetEntity: Book::class, mappedBy: "bookprice", cascade: ["persist", "remove"])]

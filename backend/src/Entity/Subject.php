@@ -16,12 +16,10 @@ class Subject
     #[ORM\Column(name: "subject_id")]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[ORM\JoinColumn(name: "short_name")]
+    #[ORM\Column(name: "short_name", length: 255)]
     private ?string $shortname = null;
 
-    #[ORM\Column(length: 255)]
-    #[ORM\JoinColumn(name: "full_name")]
+    #[ORM\Column(name: "full_name", length: 255)]
     private ?string $fullname = null;
 
     #[ORM\OneToOne(targetEntity: User::class, cascade: ["persist", "remove"])]
