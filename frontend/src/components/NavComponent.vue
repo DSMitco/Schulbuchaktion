@@ -15,12 +15,7 @@ body{
 
 }
 
-section{
-  width: 100%;
-  background-color: aqua;
-  border-radius: 200px !important;
-  display: table;
-}
+
 
 nav{
 
