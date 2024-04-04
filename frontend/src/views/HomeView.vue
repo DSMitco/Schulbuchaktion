@@ -9,8 +9,8 @@ import Classlist from "@/views/Classlist.vue";
 </script>
 
 <template>
-  <NavView class="navBar"/>
-  <MenuComponent />
+
+  <MenuComponent class="menu"/>
   <Classlist/>
 
 
@@ -18,8 +18,8 @@ import Classlist from "@/views/Classlist.vue";
 
 <style scoped>
 
-.navBar {
-  margin-bottom: 3rem;
+.menu {
+ margin-top:2%;
 }
 
 </style>

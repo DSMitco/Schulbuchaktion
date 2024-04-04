@@ -31,8 +31,5 @@ const items = [
   background-color: #4C4A51;
 }
 
-.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-  color: white;
-}
 
 </style>
