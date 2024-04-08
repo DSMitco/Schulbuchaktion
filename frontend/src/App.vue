@@ -5,13 +5,14 @@ import Imprint from "@/views/Imprint.vue";
 import Nav from "@/components/NavComponent.vue";
 import Footer from "@/components/FooterComponent.vue"
 import HomeView from "@/views/HomeView.vue";
+import AGB from "@/views/AGB.vue";
 
 </script>
 
 <template>
   <Nav />
 
-<HomeView/>
+<Imprint/>
 
   <Footer />
 </template>
