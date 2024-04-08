@@ -33,6 +33,9 @@ class Book
     #[ORM\Column(name: "school_form", type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $schoolform = null;
 
+    #[ORM\Column(name: "teacherversion", type: Types::BOOLEAN, nullable: true)]
+    private ?Boolean $teacherversion = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $info = null;
 
@@ -45,9 +48,8 @@ class Book
     #[ORM\Column(name: "mainbook_id", type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $mainbookid = null;
 
-    #[ORM\OneToOne(targetEntity: Bookprice::class, cascade: ["persist", "remove"])]
-    #[ORM\JoinColumn(name: "book_price_id", referencedColumnName: "book_price_id")]
-    private ?Bookprice $bookprice = null;
+    #[ORM\Column(name: "bookprice", type: Types::FLOAT, nullable: true)]
+    private ?float $bookprice = null;
 
     #[ORM\ManyToOne(targetEntity: Subject::class, inversedBy: "books")]
     #[ORM\JoinColumn(name: "subject_id", referencedColumnName: "subject_id")]
@@ -177,12 +179,12 @@ class Book
         return $this;
     }
 
-    public function getBookprice(): ?Bookprice
+    public function getBookprice(): ?float
     {
         return $this->bookprice;
     }
 
-    public function setBookprice(?Bookprice $bookprice): self
+    public function setBookprice(?float $bookprice): self
     {
         $this->bookprice = $bookprice;
 
@@ -270,5 +272,16 @@ class Book
 
         return $this;
     }
+
+    public function getTeacherversion(): ?bool
+    {
+        return $this->teacherversion;
+    }
+
+    public function setTeacherversion(?bool $teacherversion): void
+    {
+        $this->teacherversion = $teacherversion;
+    }
+
 
 }

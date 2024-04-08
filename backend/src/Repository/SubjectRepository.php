@@ -21,6 +21,16 @@ class SubjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Subject::class);
     }
 
+    public function findByFullName($name): ?Subject
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.fullname = :val')
+            ->setParameter('val', $name)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     //    /**
     //     * @return Subject[] Returns an array of Subject objects
     //     */

@@ -16,8 +16,8 @@ class Subject
     #[ORM\Column(name: "subject_id")]
     private ?int $id = null;
 
-    #[ORM\Column(name: "short_name", length: 255)]
-    private ?string $shortname = null;
+    #[ORM\Column(name: "short_name", length: 255, options: ["default" => "Nicht Angegeben"])]
+    private ?string $shortname = "Nicht Angegeben";
 
     #[ORM\Column(name: "full_name", length: 255)]
     private ?string $fullname = null;
