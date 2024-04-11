@@ -6,14 +6,14 @@ import Nav from "@/components/NavComponent.vue";
 import Footer from "@/components/FooterComponent.vue"
 import HomeView from "@/views/HomeView.vue";
 import AGB from "@/views/AGB.vue";
+import MenuComponent from "@/components/MenuComponent.vue";
 
 </script>
 
 <template>
   <Nav />
-
-<Imprint/>
-
+  <MenuComponent/>
+<RouterView/>
   <Footer />
 </template>
 

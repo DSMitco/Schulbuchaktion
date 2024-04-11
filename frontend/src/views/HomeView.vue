@@ -10,16 +10,10 @@ import Classlist from "@/views/Classlist.vue";
 
 <template>
 
-  <MenuComponent class="menu"/>
-  <Classlist/>
-
 
 </template>
 
 <style scoped>
 
-.menu {
- margin-top:2%;
-}
 
 </style>
