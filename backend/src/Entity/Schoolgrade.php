@@ -2,27 +2,25 @@
 
 namespace App\Entity;
 
-use App\Repository\PublisherRepository;
+use App\Repository\SchoolgradesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity(repositoryClass: PublisherRepository::class)]
-class Publisher
+#[ORM\Entity(repositoryClass: SchoolgradesRepository::class)]
+class Schoolgrade
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: "publisher_id")]
+    #[ORM\Column(name: "id")]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
-    private ?int $vnr = null;
+    private ?string $grade = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
 
-    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: "publisher")]
+    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: "grades")]
     private Collection $books;
 
     public function getId(): ?int
@@ -30,26 +28,14 @@ class Publisher
         return $this->id;
     }
 
-    public function getVnr(): ?int
+    public function getGrade(): ?string
     {
-        return $this->vnr;
+        return $this->grade;
     }
 
-    public function setVnr(int $vnr): static
+    public function setGrade(string $grade): static
     {
-        $this->vnr = $vnr;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
+        $this->grade = $grade;
 
         return $this;
     }
@@ -68,7 +54,7 @@ class Publisher
     {
         if (!$this->books->contains($book)) {
             $this->books[] = $book;
-            $book->setPublisher($this);
+            $book->addGrade($this);
         }
 
         return $this;
@@ -77,12 +63,9 @@ class Publisher
     public function removeBook(Book $book): self
     {
         if ($this->books->removeElement($book)) {
-            if ($book->getPublisher() === $this) {
-                $book->setPublisher(null);
-            }
+            $book->removeGrade($this);
         }
 
         return $this;
     }
-
 }

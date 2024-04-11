@@ -21,6 +21,16 @@ class PublisherRepository extends ServiceEntityRepository
         parent::__construct($registry, Publisher::class);
     }
 
+    public function findByVnr($vnr): ?Publisher
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.vnr = :val')
+            ->setParameter('val', $vnr)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     //    /**
     //     * @return Publisher[] Returns an array of Publisher objects
     //     */
