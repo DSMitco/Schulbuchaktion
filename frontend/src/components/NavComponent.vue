@@ -9,22 +9,6 @@ const items = [
   { label: 'Logout', to: 'loginView' },
 ]
 
-  /*export default {
-    name: '/import',
-    mounted() {
-      // Make an AJAX request to the Symfony backend when the component is mounted
-      axios.get('/import')
-          .then(response => {
-            // Handle the response from the backend
-            console.log(response.data);
-          })
-          .catch(error => {
-            // Handle errors
-            console.error('Error:', error);
-          });
-    }
-  }*/
-
 </script>
 
 <template>

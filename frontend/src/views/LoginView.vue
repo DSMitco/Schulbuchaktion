@@ -1,50 +1,95 @@
-<script>
-import { defineComponent, ref } from 'vue'
-import axios from 'axios'
+<script setup>
+import { ref } from 'vue';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 
-export default defineComponent({
-  name: 'HelloWorld',
-  setup() {
-    const message = ref('')
-    var mess1;
+const email = ref('');
+const password = ref('');
 
-    const fetchMessage = async () => {
-      try {
-        const response = await axios.get('/api/hello')
-        console.log(response.data.message);
-        message.value = response.data.message
-
-        mess1 = response.data.message
-        console.log(mess1)
-
-        console.log(message.value)
-        console.log('In Fetch')
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    return {
-      message,
-      fetchMessage
-    }
-  }
-})
-
-
+const login = () => {
+  // Your login logic here
+};
 </script>
 
 <template>
-  <p>Hello i am in Login</p>
-  <div>
+  <div class="body">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <h1 class="headline">Login - SBA</h1>
+          <form @submit.prevent="login">
+            <div class="form-group">
+              <div class="input-wrapper">
+                <InputText id="email" v-model="email" class="form-control" placeholder="E-Mail" />
+              </div>
+              <div class="input-wrapper">
+                <InputText id="password" v-model="password" class="form-control" type="password" placeholder="Passwort" />
+              </div>
+              <div class="input-wrapper">
+                <Button label="Login" type="submit" class="btn btn-primary" />
+              </div>
+            </div>
 
-    <button @click="fetchMessage">Fetch Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  <p>{{ message }}</p>
+
 </template>
 
 <style scoped>
+@import 'primevue/resources/primevue.min.css';
+@import 'primeicons/primeicons.css';
+@import 'primevue/resources/themes/aura-dark-indigo/theme.css';
 
+.body{
+  background: #2A292E;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-right: 10%;
+}
 
+.form-group {
+  width: 150%;
+  border: 5px solid #652EA8;
+  border-radius: 5px;
+  padding: 20px;
+}
 
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.form-control, .btn-primary {
+  flex-grow: 1;
+  margin-left: 10px;
+  width: 100%; /* Make the input fields and button the same width */
+}
+
+.btn-primary {
+  display: flex;
+  margin-top: 20px;
+  background-color: #652EA8;
+  color: white; /* Make the button text white */
+}
+
+.input-wrapper:hover {
+  border-color: #652EA8;
+}
+
+.headline {
+  color: #FFF25B;
+  text-align: right;
+}
 </style>
