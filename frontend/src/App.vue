@@ -2,14 +2,14 @@
 import Nav from "@/components/NavComponent.vue";
 import Footer from "@/components/FooterComponent.vue"
 import HomeView from "@/views/HomeView.vue";
+import MenuComponent from "@/components/MenuComponent.vue";
 
 </script>
 
 <template>
   <Nav />
-
-<HomeView/>
-
+  <MenuComponent/>
+<RouterView/>
   <Footer />
 </template>
 
