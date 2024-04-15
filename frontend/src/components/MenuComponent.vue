@@ -2,9 +2,9 @@
 import Menubar from 'primevue/menubar';
 import 'primevue/resources/themes/aura-dark-amber/theme.css'
 const items = [
-  {label: 'Bestellliste', icon: 'pi pi-info', routerLink: '/bestellliste'},
-  {label: 'Bestellübersicht', icon: 'pi pi-home', routerLink: '/bestelluebersicht'},
-  {label: 'Klassenübersicht', icon: 'pi pi-cog', routerLink: '/klassenuebersicht'},
+  {label: 'Bestellliste', routerLink: 'orderListView'},
+  {label: 'Bestellübersicht', routerLink: 'orderOverview'},
+  {label: 'Klassenübersicht', routerLink: 'loginView'},
 
 ];
 
