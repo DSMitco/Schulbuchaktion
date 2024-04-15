@@ -23,7 +23,7 @@ class ReadCSVController extends AbstractController
     #[Route('/doRead', name: 'doRead')]
     public function index(EntityManagerInterface $em): Response
     {
-        $filePath = 'Schulbuchliste_4100_2024_2025.xlsx';
+        $filePath = "Schulbuchliste_4100_2024_2025.xlsx";
 
         // Lesen Sie die .xlsx-Datei
         $spreadsheet = IOFactory::load($filePath);
@@ -126,8 +126,7 @@ class ReadCSVController extends AbstractController
             $em->flush(); // Save all changes to the database
         }
 
-        return $this->render('read_csv/index.html.twig', [
-            'controller_name' => 'ReadCSVController',
-        ]);
+        return new Response('Data successfully written to the database');
+
     }
 }
