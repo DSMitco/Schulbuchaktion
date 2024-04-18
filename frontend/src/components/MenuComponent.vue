@@ -1,5 +1,4 @@
 <script setup>
-import Menubar from 'primevue/menubar';
 import 'primevue/resources/themes/aura-dark-amber/theme.css'
 import { RouterLink } from "vue-router";
 
