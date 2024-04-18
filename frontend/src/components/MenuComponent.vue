@@ -1,50 +1,60 @@
 <script setup>
 import Menubar from 'primevue/menubar';
 import 'primevue/resources/themes/aura-dark-amber/theme.css'
-import { RouterLink } from "vue-router";
+import {RouterLink} from "vue-router";
 
 const items = [
   {label: 'Bestellliste', to: 'orderList'},
-  {label: 'Bestellübersicht',  to: 'orderOverview'},
-  {label: 'Klassenübersicht',  to: 'classList'},
+  {label: 'Bestellübersicht', to: 'orderOverview'},
+  {label: 'Klassenübersicht', to: 'classList'},
 
 ];
 
 
 </script>
-
 <template>
-  <Menubar class="menu">
-    <template #start id="startTemplate">
-    <template v-for="item in items" >
-        <router-link :to="{name: item.to}" class="router-link rr">
-          {{ item.label }}
-        </router-link>
-    </template>
-    </template>
+  <div class="menu" >
+    <div v-for="item in items" class="router-div">
+      <router-link :to="item.to" class="router-link">{{item.label}}</router-link>
+    </div>
 
-  </Menubar>
+  </div>
+
+
+
+
 </template>
 
 <style scoped>
+
 .menu {
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   width: 33%;
   background-color: #5A4F77;
   margin: 2% auto auto auto;
   border: 3px #CCA3FD;
+  border-radius:20px;
 }
 
 
-.router-link{
-  text-decoration:none;
-  color:white;
-  padding:5%;
+.router-link {
+  text-decoration: none;
+  color: white;
+  padding: 5%;
+
 }
 
-.router.link:hover{
-  background-color:white;
+/*
+.router-link:hover{
+  background-color:#AC6ECE;
+  color:black;
+}
+*/
+
+.router-div {
+  margin:2%;
+  font-size:17px;
 }
 
 </style>
