@@ -3,8 +3,6 @@ import Menubar from 'primevue/menubar';
 import { RouterLink } from "vue-router";
 import 'primevue/resources/themes/aura-dark-amber/theme.css'
 
-const route = "{{ path('blog_show', {slug: 'my-blog-post'})|escape('js') }}";
-
 const items = [
   { label: 'Startseite', to: 'home' },
   { label: 'Import', to: 'about' },

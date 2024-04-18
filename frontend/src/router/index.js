@@ -8,6 +8,7 @@ import ImprintView from '../views/Imprint.vue'
 import LoginView from '../views/LoginView.vue'
 import OrderListView from '../views/OrderList.vue'
 import OrderOverview from '../views/OrderOverview.vue'
+import Imprint from "@/views/Imprint.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,7 +61,12 @@ const router = createRouter({
       path: '/orderOverview',
       name: 'orderOverView',
       component: OrderOverview
-    }
+    },
+      {
+          path:'/imprint',
+          name: 'imprint',
+          component: Imprint
+      }
   ]
 })
 

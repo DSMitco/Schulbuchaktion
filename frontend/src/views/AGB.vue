@@ -5,6 +5,7 @@
 <template>
   <h1>Allgemeine Geschäftsbedingungen (AGB) der HTL Steyr</h1>
 
+
   <h2>1. Geltungsbereich</h2>
   <p>Die folgenden Allgemeinen Geschäftsbedingungen (AGB) gelten für sämtliche Geschäftsbeziehungen zwischen der HTL Steyr und ihren Kunden im Zusammenhang mit dem Verkauf von Schulbüchern und anderen schulbezogenen Produkten.</p>
 
