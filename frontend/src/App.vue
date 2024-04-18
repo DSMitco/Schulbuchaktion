@@ -6,15 +6,13 @@ import Nav from "@/components/NavComponent.vue";
 import Footer from "@/components/FooterComponent.vue"
 import HomeView from "@/views/HomeView.vue";
 import AGB from "@/views/AGB.vue";
+import FAQ from "@/views/FAQ.vue";
 
 </script>
 
 <template>
-  <Nav />
-
-<Imprint/>
-
-  <Footer />
+<FAQ/>
+  <Footer/>
 </template>
 
 <style>
