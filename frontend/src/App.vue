@@ -1,6 +1,7 @@
 <script setup>
 import Nav from "@/components/NavComponent.vue";
 import Footer from "@/components/FooterComponent.vue"
+import MenuComponent from "@/components/MenuComponent.vue";
 
 </script>
 
@@ -8,6 +9,7 @@ import Footer from "@/components/FooterComponent.vue"
   <div class="wrapper">
     <div class="content">
       <Nav />
+      <MenuComponent/>
       <RouterView />
     </div>
     <div class="footer">
