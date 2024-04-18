@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  database:
+    container_name: database_schulbuchaktion
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password --log_bin_trust_function_creators=1
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpwd
+      MYSQL_DATABASE: schulbuchaktion
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - '4306:3306'
+    volumes:
+      - "db_app:/var/lib/mysql"
+  php:
+    build:
+      context: ./php
+      args:
+        TIMEZONE: ${TIMEZONE}
+
+    volumes:
+      - ../:/var/www/symfony:cached
+      - symfony_app_var:/var/www/symfony/var
+      - symfony_app_vendor:/var/www/symfony/vendor
+    networks:
+      - symfony_schulbuch
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - ../:/var/www/symfony:cached
+      - symfony_app_var:/var/www/symfony/var
+      - symfony_app_vendor:/var/www/symfony/vendor
+    ports:
+      - 80:80
+    networks:
+      - symfony_schulbuch
+    env_file:
+      - .env.nginx.local
+volumes:
+  symfony_app_var:
+  symfony_app_vendor:
+  db_app:
+networks:
+  symfony_schulbuch:
