@@ -7,11 +7,21 @@ import Footer from "@/components/FooterComponent.vue"
 import HomeView from "@/views/HomeView.vue";
 import AGB from "@/views/AGB.vue";
 import FAQ from "@/views/FAQ.vue";
+import NavView from "@/components/NavComponent.vue";
+
+const fetchData = async () => {
+  const response = await fetch('http://localhost:80/readExcel/doRead');
+  const data = await response.text();
+  console.log(data);
+}
+
+fetchData();
 
 </script>
 
+
 <template>
-<FAQ/>
+<NavView/>
   <Footer/>
 </template>
 
