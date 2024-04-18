@@ -5,7 +5,7 @@ import 'primevue/resources/themes/aura-dark-amber/theme.css'
 
 const items = [
   { label: 'Startseite', to: 'home' },
-  { label: 'Import', to: 'about' },
+  { label: 'Import', to: 'importView' },
   { label: 'Logout', to: 'FAQView' },
 ]
 

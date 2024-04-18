@@ -9,7 +9,7 @@ import 'primevue/resources/themes/aura-light-green/theme.css'
   <section class="sec">
     <div class="borderDiv">
     <div class="list">
-      <DataTable :value="test" tableStyle="min-width: 50rem; background-color: white">
+      <DataTable tableStyle="min-width: 50rem; background-color: white">
         <Column field="klasse" header="Klassenname"></Column>
         <Column field="abteilung" header="Abteilung"></Column>
         <Column field="anzahl" header="Anzahl der Schüler"></Column>
