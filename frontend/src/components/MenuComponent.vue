@@ -1,5 +1,4 @@
 <script setup>
-import Menubar from 'primevue/menubar';
 import 'primevue/resources/themes/aura-dark-amber/theme.css'
 import {RouterLink} from "vue-router";
 
@@ -10,18 +9,13 @@ const items = [
 
 ];
 
-
 </script>
 <template>
   <div class="menu" >
     <div v-for="item in items" class="router-div">
       <router-link :to="item.to" class="router-link">{{item.label}}</router-link>
     </div>
-
   </div>
-
-
-
 
 </template>
 
