@@ -3,37 +3,61 @@
 namespace App\Controller;
 
 use App\Entity\Book;
-use App\Entity\Bookorder;
-use App\Entity\Department;
 use App\Entity\Publisher;
 use App\Entity\Schoolgrade;
 use App\Entity\Subject;
-use App\Entity\User;
+use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-//require '../../vendor/autoload.php';
-
 #[Route('/readExcel', name: 'readExcel.')]
 class ReadCSVController extends AbstractController
 {
+
     #[Route('/doRead', name: 'doRead')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, BookRepository $br): Response
     {
-        $filePath = "Schulbuchliste_4100_2024_2025.xlsx";
+        $file = $request->files->get('file'); // get the file from the sent request
+
+        if ($file == null) {
+            return new Response('No file was uploaded');
+        }
+
+        $fileFolder = __DIR__ . '/../../public/uploads/';  //choose the folder in which the uploaded file will be stored
+
+        $filePathName = md5(uniqid()) . '.' . $file->getClientOriginalExtension();
+
+        try {
+            $file->move($fileFolder, $filePathName);
+        } catch (FileException $e) {
+            return new Response('Error moving file: ' . $e->getMessage());
+        }
+        $filePath = $fileFolder . $filePathName;
 
         // Lesen Sie die .xlsx-Datei
-        $spreadsheet = IOFactory::load($filePath);
+        try {
+            $spreadsheet = IOFactory::load($filePath);
+        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            return new Response('Error loading file: ' . $e->getMessage());
+        }
 
         // Zugriff auf das erste Arbeitsblatt
         $worksheet1 = $spreadsheet->getSheet(0);
 
+        try {
+            $books = $em->getRepository(Book::class)->findAll();
+        } catch (\Exception $e) {
+
+            return new Response($e);
+        }
+
         // Durchlaufen Sie die Zeilen des ersten Arbeitsblatts
         foreach ($worksheet1->getRowIterator() as $row) {
-            // Zugriff auf die Zellen einer Zeile
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(FALSE); // Alle Zellen, auch leere, durchlaufen
 
@@ -46,10 +70,19 @@ class ReadCSVController extends AbstractController
                 continue;
             }
 
-            $book = $em->getRepository(Book::class)->findOneBy(['bnr' => $data[0]]);
+            $exist = false;
+
+            foreach ($books as $tempBook) {
+                if ($tempBook->getBnr() == $data[0]) {
+                    $exist = true;
+                    break;
+                }
+            }
+
             //Update the price if the book already exists
-            if (!$book == null) {
-                $book->setPrice((float)$data[12]);
+            if ($exist) {
+                $book = $em->getRepository(Book::class)->findBookByBnr($data[0]);
+                $book->setBookprice((float)$data[12]);
             } else {
                 //Create a new book if it does not exist
                 $book = new Book();
@@ -61,7 +94,7 @@ class ReadCSVController extends AbstractController
                 $book->setSchoolform((int)$data[4]);
 
                 //@TODO: Create a new Subject and Schoolgrade if needed
-                $subject = $em->getRepository(Subject::class)->findByFullName(['name' => $data[5]]);
+                $subject = $em->getRepository(Subject::class)->findByFullName([$data[5]]);
                 //Create a new subject if it does not exist
                 if ($subject == null) {
                     $subject = new Subject();
@@ -75,7 +108,7 @@ class ReadCSVController extends AbstractController
 
                 //Add the grades to the book
                 foreach ($grades as $gradeValue) {
-                    $grade = $em->getRepository(Schoolgrade::class)->findByGrade(['grade' => $gradeValue]);
+                    $grade = $em->getRepository(Schoolgrade::class)->findByGrade([$gradeValue]);
                     //Create a new grade if it does not exist
                     if ($grade === null) {
                         $grade = new Schoolgrade();
@@ -86,7 +119,7 @@ class ReadCSVController extends AbstractController
                     $grade->addBook($book);
                 }
 
-                if ($data[7] == null){
+                if ($data[7] == null) {
                     $book->setTeacherversion(false);
                 } else {
                     $book->setTeacherversion(true);
@@ -96,7 +129,7 @@ class ReadCSVController extends AbstractController
 
                 $vnr = (int)$data[9];
 
-                $publisher = $em->getRepository(Publisher::class)->findByVnr(['vnr' => $vnr]);
+                $publisher = $this->entityManager->getRepository(Publisher::class)->findByVnr([$vnr]);
                 //Create a new publisher if it does not exist
                 if ($publisher == null) {
                     $publisher = new Publisher();
@@ -108,25 +141,25 @@ class ReadCSVController extends AbstractController
                 $book->setPublisher($publisher);
                 $book->setMainbookid($data[11]);
                 $book->setBookprice((float)$data[12]);
-                if ($data[15] == null){
+                if ($data[15] == null) {
                     $book->setEbook(false);
                 } else {
                     $book->setEbook(true);
                 }
 
-                if ($data[16] == null){
+                if ($data[16] == null) {
                     $book->setEbookplus(false);
                 } else {
                     $book->setEbookplus(true);
                 }
 
                 // Persist the new Book entity
+                $em->persist($book);
             }
-            $em->persist($book);
-            $em->flush(); // Save all changes to the database
         }
+        $em->flush(); // Save all changes to the database
+        // Die datei nach dem Bearbeiten löschen
 
         return new Response('Data successfully written to the database');
-
     }
 }

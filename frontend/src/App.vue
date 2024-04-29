@@ -1,24 +1,26 @@
 <script setup>
 import NavView from "@/components/NavComponent.vue";
-const fetchData = async () => {
-  const response = await fetch('http://localhost:80/readExcel/doRead');
+
+const uploadFile = async (event) => {
+  const file = event.target.files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch('http://localhost:80/readExcel/doRead', {
+    method: 'POST',
+    body: formData
+  });
+
   const data = await response.text();
   console.log(data);
 }
-
-fetchData();
 
 </script>
 
 
 <template>
-  <NavView />
-
+    <input type="file" @change="uploadFile" accept=".xlsx" />
 </template>
 
 <style>
-body{
-  background-color: red;
-}
-
 </style>
