@@ -136,6 +136,7 @@ class ReadCSVController extends AbstractController {
                 }
 
 
+
                 if ($data[7] == null) {
                     $book->setTeacherversion(false);
                 } else {
