@@ -23,7 +23,7 @@ class Subject
     private ?string $fullname = null;
 
     #[ORM\OneToOne(targetEntity: User::class, cascade: ["persist", "remove"])]
-    #[ORM\JoinColumn(name: "head_of_subject_id", referencedColumnName: "user_id", nullable: false)]
+    #[ORM\JoinColumn(name: "head_of_subject_id", referencedColumnName: "user_id", nullable: true)]
     private ?User $headofsubjectid = null;
 
     public function getId(): ?int

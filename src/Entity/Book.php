@@ -36,7 +36,7 @@ class Book
     #[ORM\Column(name: "teacherversion", type: Types::BOOLEAN, nullable: true)]
     private ?bool $teacherversion = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $info = null;
 
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]

@@ -121,12 +121,12 @@ class ReadCSVController extends AbstractController {
                 //Splitts the grades if there are multiple --> format of grade like 1=2=3 etc.
                 $grades = explode('=', $data[6]);
 
-                /*
+
                 //Add the grades to the book
                 foreach ($grades as $gradeValue) {
-                    $grade = $em->getRepository(Schoolgrade::class)->findByGrade([$gradeValue]);
+                    $grade = $em->getRepository(Schoolgrade::class)->findByGrade($gradeValue);
                     //Create a new grade if it does not exist
-                    if ($grade === null) {
+                    if (!$grade) {
                         $grade = new Schoolgrade();
                         $grade->setGrade($gradeValue);
                         $em->persist($grade);
@@ -134,7 +134,7 @@ class ReadCSVController extends AbstractController {
                     $book->addGrade($grade);
                     $grade->addBook($book);
                 }
-                */
+
 
                 if ($data[7] == null) {
                     $book->setTeacherversion(false);
@@ -156,7 +156,13 @@ class ReadCSVController extends AbstractController {
                 }
 
                 $book->setPublisher($publisher);
-                $book->setMainbookid($data[11]);
+
+                if ($data[11] == null) {
+                    $book->setMainbookid(null);
+                } else {
+                    $book->setMainbookid($data[11]);
+                }
+
                 $book->setBookprice((float)$data[12]);
                 if ($data[15] == null) {
                     $book->setEbook(false);
