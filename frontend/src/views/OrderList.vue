@@ -4,6 +4,7 @@ import DataTablesCore from 'datatables.net-bs5';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'primevue/resources/themes/aura-light-green/theme.css'
+import DocumentButton from "../components/DocumentButton.vue";
 /*
 --[OPTIONEN] muss haben:
 --> Jahr
@@ -19,22 +20,23 @@ import 'primevue/resources/themes/aura-light-green/theme.css'
 --> löschen
 -- soll haben:
 --> duplizieren
-*** wegen funktionen evt. eine wietere Spalte für die Auswahl erstellen
-
-Notiz: so ca. wie die Excel-Tabelle machen
-Notiz: ajax für csv
-Links-Haufen (ignorieren)
-https://www.codementor.io/@pmbanugo/how-to-build-a-real-time-editable-data-table-in-vue-js-kuxfvb215
-https://www.npmjs.com/package/vue3-easy-data-table
-https://at.video.search.yahoo.com/yhs/search;_ylt=AwrNYtgM0Rxm0U459tiUCYpQ;_ylu=c2VjA3NlYXJjaAR2dGlkAw--?p=simple+Datatable+vue.js+with+reactive+data+from+xsl+file&ei=UTF-8&fr2=p%3As%2Cv%3Av%2Cm%3Asb%2Crgn%3Atop&fr=yhs-airfind-03&hsimp=yhs-03&hspart=airfind&type=50307_30_YHS
-https://www.youtube.com/watch?v=bwnK-vp1c0I
-https://github.com/GerkinDev/vuejs-datatable/tree/master
-https://medium.com/free-code-camp/how-to-build-a-real-time-editable-data-table-in-vue-js-46b7f0b11684
-https://datatables.net/forums/discussion/77193/working-with-vue-3-reactive-data
-https://www.reddit.com/r/vuejs/comments/lv3x0n/responsive_datatables_for_vue_3_the_easy_way/
-https://madewithvuejs.com/blog/best-vue-js-datatables
-https://datatables.net/blog/2022/vue
 */
+const test = [
+  {
+    Jahr: '2023/24',
+    Buchbezeichnung: 'Buch',
+    Klasse: '4AHTIN',
+    Repetenten: 'Ja',
+    crudAction: DocumentButton
+  },
+  {
+    Jahr: '2023/24',
+    Buchbezeichnung: 'Buch 3',
+    Klasse: '4BHTIN',
+    Repetenten: 'Nein',
+    crudAction: DocumentButton
+  }
+]
 
 const active = ref(false);
 </script>
@@ -53,19 +55,17 @@ const active = ref(false);
               <Column field="Klasse" header="Klasse"></Column>
               <Column field="Repetenten" header="Repetenten"></Column>
               <Column field="E-Book & E-Book-Plus" header="E-Book & E-Book-Plus"></Column>
-              <Column field="Auswahl" header="Auswahl"></Column>
+              <Column field="crudAction"  header="">
+                <template #body="slotProps">
+                  <component :is="slotProps.data.crudAction"> </component>
+                </template>
+
+              </Column>
             </DataTable>
           </div>
         </div>
 
-        <button class="toggle" @click="active = !active">Options</button>
-        <div v-if="active"  id="dropdown" class="action-div">
-          <ul>
-            <li><button v-show="active" @click="editData">Bearbeiten</button></li>
-            <li><button v-show="active" @click="deleteData">Löschen</button></li>
-            <li><button v-show="active" @click="duplicateData">Duplizieren</button></li>
-          </ul>
-        </div>
+
       </section>
 <button class="LoneBTN">Neu</button>
   </div>
@@ -80,7 +80,8 @@ h1{
 }
 
 .LoneBTN{
-  border: 2px solid #652EA8;
+  border: 2px solid #CCA3FD;
+  background-color: #652EA8;
   font-size: large;
   padding: 10px;
   margin-left: 20%;
@@ -119,7 +120,7 @@ ul{
 
 button{
   background-color: #CCA3FD;
-  border-radius: 4px;
+  border-radius: 10px;
   margin-left: 20px;
   border: 2px solid #652EA8;
   font-size: medium;
