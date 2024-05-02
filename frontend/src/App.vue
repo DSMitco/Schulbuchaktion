@@ -6,7 +6,7 @@ const uploadFile = async (event) => {
   const formData = new FormData();
   formData.append('file', file);
 
-  const response = await fetch('http://localhost:80/readExcel/doRead', {
+  const response = await fetch('http://localhost:80/doRead', {
     method: 'POST',
     body: formData
   });
