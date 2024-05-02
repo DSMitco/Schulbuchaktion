@@ -3,13 +3,19 @@ import Nav from "@/components/NavComponent.vue";
 import Footer from "@/components/FooterComponent.vue"
 import MenuComponent from "@/components/MenuComponent.vue";
 
-const fetchData = async () => {
-  const response = await fetch('http://localhost:80/readExcel/doRead');
+const uploadFile = async (event) => {
+  const file = event.target.files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch('http://localhost:80/doRead', {
+    method: 'POST',
+    body: formData
+  });
+
   const data = await response.text();
   console.log(data);
 }
-
-fetchData();
 
 </script>
 
@@ -19,6 +25,7 @@ fetchData();
       <Nav />
       <MenuComponent/>
       <RouterView />
+      <input type="file" @change="uploadFile" accept=".xlsx" />
     </div>
     <div class="footer">
       <Footer />
