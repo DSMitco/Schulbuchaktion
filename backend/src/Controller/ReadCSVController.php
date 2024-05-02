@@ -12,12 +12,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-#[Route('/readExcel', name: 'readExcel.')]
-class ReadCSVController extends AbstractController
-{
+
+use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+
+class ReadCSVController extends AbstractController {
+
+    #[Route(path: '/list', name: 'list', methods: ['GET'])]
+    public function list(Request $request, EntityManagerInterface $em, BookRepository $br): Response
+    {
+
+        try {
+            $books = $em->getRepository(Book::class)->findAll();
+        } catch (\Exception $e) {
+
+            return new Response($e);
+        }
+        return new Response('Data successfully written to the database');
+    }
 
     #[Route('/doRead', name: 'doRead')]
     public function index(Request $request, EntityManagerInterface $em, BookRepository $br): Response
@@ -25,7 +40,8 @@ class ReadCSVController extends AbstractController
         $file = $request->files->get('file'); // get the file from the sent request
 
         if ($file == null) {
-            return new Response('No file was uploaded');
+            //return new Response('No file was uploaded');
+            $file = 'Schulbuchliste_4100_2023_2024.xlsx';
         }
 
         $fileFolder = __DIR__ . '/../../public/uploads/';  //choose the folder in which the uploaded file will be stored
@@ -38,7 +54,6 @@ class ReadCSVController extends AbstractController
             return new Response('Error moving file: ' . $e->getMessage());
         }
         $filePath = $fileFolder . $filePathName;
-
         // Lesen Sie die .xlsx-Datei
         try {
             $spreadsheet = IOFactory::load($filePath);
@@ -106,11 +121,12 @@ class ReadCSVController extends AbstractController
                 //Splitts the grades if there are multiple --> format of grade like 1=2=3 etc.
                 $grades = explode('=', $data[6]);
 
+
                 //Add the grades to the book
                 foreach ($grades as $gradeValue) {
-                    $grade = $em->getRepository(Schoolgrade::class)->findByGrade([$gradeValue]);
+                    $grade = $em->getRepository(Schoolgrade::class)->findByGrade($gradeValue);
                     //Create a new grade if it does not exist
-                    if ($grade === null) {
+                    if (!$grade) {
                         $grade = new Schoolgrade();
                         $grade->setGrade($gradeValue);
                         $em->persist($grade);
@@ -129,7 +145,7 @@ class ReadCSVController extends AbstractController
 
                 $vnr = (int)$data[9];
 
-                $publisher = $this->entityManager->getRepository(Publisher::class)->findByVnr([$vnr]);
+                $publisher = $em->getRepository(Publisher::class)->findByVnr([$vnr]);
                 //Create a new publisher if it does not exist
                 if ($publisher == null) {
                     $publisher = new Publisher();
@@ -139,7 +155,13 @@ class ReadCSVController extends AbstractController
                 }
 
                 $book->setPublisher($publisher);
-                $book->setMainbookid($data[11]);
+
+                if ($data[11] == null) {
+                    $book->setMainbookid(null);
+                } else {
+                    $book->setMainbookid($data[11]);
+                }
+
                 $book->setBookprice((float)$data[12]);
                 if ($data[15] == null) {
                     $book->setEbook(false);
@@ -162,4 +184,7 @@ class ReadCSVController extends AbstractController
 
         return new Response('Data successfully written to the database');
     }
+
+
+
 }
