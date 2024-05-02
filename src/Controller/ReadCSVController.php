@@ -135,8 +135,6 @@ class ReadCSVController extends AbstractController {
                     $grade->addBook($book);
                 }
 
-
-
                 if ($data[7] == null) {
                     $book->setTeacherversion(false);
                 } else {
