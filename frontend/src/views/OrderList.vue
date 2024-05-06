@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 import { ref } from 'vue';
 import DataTablesCore from 'datatables.net-bs5';
 import DataTable from 'primevue/datatable';
@@ -20,25 +21,47 @@ import DocumentButton from "../components/DocumentButton.vue";
 --> löschen
 -- soll haben:
 --> duplizieren
+
+Wichtiger Link für CRUD:
+https://vue-crud.github.io/guide/crud/field-options.html#table
+
+
 */
-const test = [
+const test = ref([
   {
     Jahr: '2023/24',
-    Buchbezeichnung: 'Buch',
+    Buchbezeichnung: 'Programming for Dummies',
     Klasse: '4AHTIN',
     Repetenten: 'Ja',
+    EBookORPlus: 'Ja',
     crudAction: DocumentButton
   },
   {
     Jahr: '2023/24',
-    Buchbezeichnung: 'Buch 3',
+    Buchbezeichnung: 'Error 404? not anymore!',
     Klasse: '4BHTIN',
     Repetenten: 'Nein',
+    EBookORPlus: 'Ja',
     crudAction: DocumentButton
   }
-]
+]);
 
-const active = ref(false);
+function createNewItem(){
+  test.value.push({
+    Jahr: '',
+    Buchbezeichnung: '',
+    Klasse: '',
+    Repetenten: '',
+    EBookORPlus: '',
+    crudAction: DocumentButton
+  });
+}
+
+function deleteItem(item) {
+  const index = test.value.findIndex(i => i === item);
+  test.value.splice(index, 1);
+}
+//<component :is="slotProps.data.crudAction"> </component>
 </script>
 
 <template>
@@ -54,10 +77,17 @@ const active = ref(false);
               <Column field="Buchbezeichnung" header="Buchbezeichnung"></Column>
               <Column field="Klasse" header="Klasse"></Column>
               <Column field="Repetenten" header="Repetenten"></Column>
-              <Column field="E-Book & E-Book-Plus" header="E-Book & E-Book-Plus"></Column>
+              <Column field="EBookORPlus" header="E-Book & E-Book-Plus"></Column>
               <Column field="crudAction"  header="">
                 <template #body="slotProps">
                   <component :is="slotProps.data.crudAction"> </component>
+                  <div class="dropdown">
+                    <button class="dropbtn">Options</button>
+                    <div class="dropdown-content">
+                      <a @click="editItem(slotProps.data)">Bearbeiten</a>
+                      <a @click="deleteItem(slotProps.data)">Löschen</a>
+                    </div>
+                  </div>
                 </template>
 
               </Column>
@@ -67,7 +97,7 @@ const active = ref(false);
 
 
       </section>
-<button class="LoneBTN">Neu</button>
+<button class="LoneBTN" @click="createNewItem">Neu</button>
   </div>
 
 </template>
@@ -138,4 +168,41 @@ body {
   height: 100vh;
   margin: 0;
 }
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #5B21B6;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #5B21B6;}
 </style>
