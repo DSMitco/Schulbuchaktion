@@ -41,7 +41,7 @@ class Schoolclass
     private ?string $profile = null;
 
     #[ORM\ManyToOne(targetEntity: Department::class, inversedBy: "schoolclasses")]
-    #[ORM\JoinColumn(name: "department_id", referencedColumnName: "department_id", nullable: false)]
+    #[ORM\JoinColumn(name: "department_id", referencedColumnName: "department_id", nullable: true)]
     private ?Department $department = null;
 
     #[ORM\OneToMany(targetEntity: Bookorder::class, mappedBy: "schoolclass")]
