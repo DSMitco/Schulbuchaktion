@@ -9,6 +9,7 @@ const test = [
     klasse: '4AHITN',
     abteilung: 'Informationstechnologie',
     anzahl: 19,
+    repetenten: 2,
     jahr: '2023/24',
     crudAction: DocumentButton
   },
@@ -16,6 +17,7 @@ const test = [
     klasse: '1AHITN',
     abteilung: 'Informationstechnologie',
     anzahl: 25,
+    repetenten:0,
     jahr: '2023/24',
     crudAction: DocumentButton
   }
@@ -30,6 +32,7 @@ const test = [
           <Column field="klasse" header="Klassenname"></Column>
           <Column field="abteilung" header="Abteilung"></Column>
           <Column field="anzahl" header="Anzahl der Schüler"></Column>
+          <Column field="repetenten" header="Anzahl der Repetenten"></Column>
           <Column field="jahr" header="Schuljahr"></Column>
           <Column field="crudAction"  header="">
                   <template #body="slotProps">
@@ -37,7 +40,6 @@ const test = [
                   </template>
 
           </Column>
-
         </DataTable>
       </div>
     </div>

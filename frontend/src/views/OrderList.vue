@@ -1,10 +1,15 @@
-<script setup lang="ts">
+<script setup >
 import { ref } from 'vue';
-import DataTablesCore from 'datatables.net-bs5';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import DocumentButton from "../components/DocumentButton.vue";
+
+import CheckboxComponent from "@/components/CheckboxComponent.vue";
+import DropDownComponent from "@/components/KlasseDropDown.vue";
+import RepetentenDropDown from "@/components/RepetentenDropDown.vue";
+import KlasseDropDown from "@/components/KlasseDropDown.vue";
+import BuchDropDown from "@/components/BuchDropDown.vue";
 /*
 --[OPTIONEN] muss haben:
 --> Jahr
@@ -24,16 +29,20 @@ import DocumentButton from "../components/DocumentButton.vue";
 const test = [
   {
     Jahr: '2023/24',
-    Buchbezeichnung: 'Buch',
-    Klasse: '4AHTIN',
-    Repetenten: 'Ja',
+    Buchbezeichnung: BuchDropDown ,//ComboBox,
+    Klasse: KlasseDropDown,
+    Repetenten: RepetentenDropDown,
+    EBook:CheckboxComponent,
+    EBookPlus: CheckboxComponent,
     crudAction: DocumentButton
   },
   {
     Jahr: '2023/24',
-    Buchbezeichnung: 'Buch 3',
-    Klasse: '4BHTIN',
-    Repetenten: 'Nein',
+    Buchbezeichnung: BuchDropDown ,//ComboBox,
+    Klasse:KlasseDropDown ,//ComboBox,
+    Repetenten: RepetentenDropDown, //ComboBox
+    EBook:CheckboxComponent,
+    EBookPlus: CheckboxComponent,
     crudAction: DocumentButton
   }
 ]
@@ -43,18 +52,42 @@ const active = ref(false);
 
 <template>
 
-    <div id="bestell_container">
-      <h1>Bestellliste</h1>
 
+
+    <div id="bestell_container">
+
+      <button class="LoneBTN">Neu</button>
       <section class="sec">
         <div class="borderDiv">
           <div class="list">
             <DataTable :value="test" tableStyle="min-width: 50rem; background-color: white">
               <Column field="Jahr" header="Schuljahr"></Column>
-              <Column field="Buchbezeichnung" header="Buchbezeichnung"></Column>
-              <Column field="Klasse" header="Klasse"></Column>
-              <Column field="Repetenten" header="Repetenten"></Column>
-              <Column field="E-Book & E-Book-Plus" header="E-Book & E-Book-Plus"></Column>
+              <Column field="Buchbezeichnung" header="Buchbezeichnung">
+                <template #body="slotProps">
+                  <component :is="slotProps.data.Buchbezeichnung"> </component>
+                </template>
+              </Column>
+              <Column field="Klasse" header="Klasse">
+                <template #body="slotProps">
+                  <component :is="slotProps.data.Klasse"> </component>
+                </template>
+              </Column>
+              <Column field="Repetenten" header="Repetenten">
+                <template #body="slotProps">
+                  <component :is="slotProps.data.Repetenten"> </component>
+                </template>
+              </Column>
+              <Column field="E-Book" header="E-Book">
+                <template #body="slotProps">
+                  <component :is="slotProps.data.EBookPlus"> </component>
+                </template>
+              </Column>
+              <Column field="E-Book-Plus" header="E-Book-Plus">
+                <template #body="slotProps">
+                  <component :is="slotProps.data.EBookPlus"> </component>
+                </template>
+              </Column>
+
               <Column field="crudAction"  header="">
                 <template #body="slotProps">
                   <component :is="slotProps.data.crudAction"> </component>
@@ -67,7 +100,7 @@ const active = ref(false);
 
 
       </section>
-<button class="LoneBTN">Neu</button>
+
   </div>
 
 </template>
@@ -84,8 +117,8 @@ h1{
   background-color: #652EA8;
   font-size: large;
   padding: 10px;
-  margin-left: 20%;
-  margin-top: 10px;
+  margin-left:5.15%;
+  margin-top: 2%;
 }
 
 .action-div{
@@ -99,20 +132,21 @@ ul{
 .list{
   width:100%;
   background-color: #CCA3FD;
+
 }
 
-.borderDiv {
-  width: 65%;
-  display: flex;
+.borderDiv{
+  width:90%;
+  display:flex;
   padding: 1%;
-  justify-content: center;
+  justify-content:center;
   align-items: center;
   background-color: #652EA8;
   border-radius: 20px;
-}
 
+}
 .sec {
-  margin-top: 3%;
+  margin-top: 1%;
   display:flex;
   justify-content:center;
   align-items: center;
@@ -125,10 +159,10 @@ button{
   border: 2px solid #652EA8;
   font-size: medium;
 }
-button:hover {
-  background-color: white;
-  color: #5B21B6;
-}
+/*button:hover {
+//  background-color: white;
+//  color: #5B21B6;
+}*/
 
 body {
 
@@ -139,3 +173,4 @@ body {
   margin: 0;
 }
 </style>
+
