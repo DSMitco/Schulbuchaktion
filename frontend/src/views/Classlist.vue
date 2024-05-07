@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'primevue/resources/themes/aura-light-green/theme.css'
+import DocumentButton from "@/components/DocumentButton.vue";
 
 const classes = ref([]);
 
@@ -31,6 +32,12 @@ onMounted(async () => {
         <Column field="studentsamount" header="Anzahl der Schüler"></Column>
         <Column field="repamount" header="Anzahl der Repetenten"></Column>
         <Column field="year" header="Schuljahr"></Column>
+        <Column field="crudAction" header="">
+          <template #body="slotProps">
+            <component :is="slotProps.data.crudAction"> </component>
+          </template>
+
+        </Column>
       </DataTable>
       </div>
 
@@ -43,26 +50,29 @@ onMounted(async () => {
 
 <style scoped>
 
-.list{
-  width:100%;
+.list {
+  width: 100%;
   background-color: #CCA3FD;
 
 }
 
-.borderDiv{
-  width:65%;
-  display:flex;
+.borderDiv {
+  width: 65%;
+  display: flex;
   padding: 1%;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   background-color: #652EA8;
   border-radius: 20px;
 
 }
+
 .sec {
   margin-top: 3%;
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
+
+
 </style>
