@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ecefef5c-8206-4774-991b-d8256c7833ce" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Controller/ReadCSVController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Schulbuchliste_4100_2023_2024.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Article.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Book.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Bookorder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Department.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Publisher.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Schoolclass.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Schoolgrade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Subject.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/ArticleRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/BookRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/BookorderRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/BookpriceRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/DepartmentRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/PublisherRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/SchoolclassRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/SchoolgradesRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/SubjectRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/AuthService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/ImportService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ArticlesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ArticlesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Arechber"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ger86/symfony-docker.git",
+    "accountId": "1a6f947f-fec7-44b6-b6f4-8da439082101"
+  }
+}]]></component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2f06ocnsERXxjPseKAiyf1SQmTa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/alexr/Documents/ITP2-Programme/symfony-docker",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mrohr\OneDrive\Dokumente\HTL\23_24\ITP2_4AHITN\UE symfony\symfony-docker" />
+      <recent name="C:\Users\mrohr\OneDrive\Dokumente\HTL\23_24\ITP2_4AHITN\UE symfony\symfony-docker\src\Repository" />
+      <recent name="C:\Users\mrohr\OneDrive\Dokumente\HTL\23_24\ITP2_4AHITN\UE symfony\symfony-docker\src\Entity" />
+      <recent name="C:\Users\mrohr\OneDrive\Dokumente\HTL\23_24\ITP2_4AHITN\UE symfony\symfony-docker\src\Controller" />
+      <recent name="C:\Users\mrohr\OneDrive\Dokumente\HTL\23_24\ITP2_4AHITN\UE symfony\symfony-docker\src\Service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mrohr\OneDrive\Dokumente\HTL\23_24\ITP2_4AHITN\UE symfony\symfony-docker\src\Controller" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml.dist" scope="XML" use_alternative_configuration_file="true" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-PS-241.14494.237" />
+        <option value="bundled-php-predefined-ba97393d7c68-8f0632a2a215-com.jetbrains.php.sharedIndexes-PS-241.14494.237" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ecefef5c-8206-4774-991b-d8256c7833ce" name="Changes" comment="" />
+      <created>1712925823725</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712925823725</updated>
+      <workItem from="1712925829181" duration="2715000" />
+      <workItem from="1713161253997" duration="1715000" />
+      <workItem from="1713420381258" duration="102000" />
+      <workItem from="1713420504140" duration="7148000" />
+      <workItem from="1714509521724" duration="17357000" />
+      <workItem from="1714631582307" duration="1608000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/frontend/node_modules/cac/mod.js" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
