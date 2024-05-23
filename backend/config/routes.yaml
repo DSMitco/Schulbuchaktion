@@ -1,3 +1,9 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+register:
+    path: /register
+    controller: ../src/Controller/SecurityController::register
+login:
+    path: /login
+    controller: ../src/Controller/SecurityController::login

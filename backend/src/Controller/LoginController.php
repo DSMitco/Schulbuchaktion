@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 #[Route('/register', name: 'register')]
-class RegistryController extends AbstractController
+class LoginController extends AbstractController
 {
     #[Route('/login', name: 'login')]
     public function authenticateUser(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response

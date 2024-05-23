@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import Menubar from "primevue/menubar";
+import {RouterLink} from "vue-router";
 
 const email = ref('');
 const password = ref('');
@@ -33,13 +33,6 @@ const login = async () => {
 </script>
 
 <template>
-  <Menubar :model="items" class="menubar">
-    <template #start>
-      <a href="/">
-        <img src="@/assets/book_icon.png" alt="icon book" class="icon-book" />
-      </a>
-    </template>
-  </Menubar>
   <div class="body">
     <div class="container">
       <div class="row">
@@ -56,6 +49,9 @@ const login = async () => {
               <div class="input-wrapper">
                 <Button @click="login" label="Login" type="submit" class="btn btn-primary" />
               </div>
+              <router-link :to="{name: 'registerView'}" class="router-link ancReg">
+                <Button label="register" class="btn"/>
+              </router-link>
             </div>
           </form>
         </div>
@@ -145,4 +141,11 @@ const login = async () => {
 .menubar {
   background-color: #4C4A51;
 }
+
+.ancReg {
+  display: flex;
+  justify-content:center;
+  text-decoration: none;
+}
+
 </style>

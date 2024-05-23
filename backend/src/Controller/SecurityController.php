@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -22,6 +25,22 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+
+    #[Route('/register', name: 'register', methods: ['POST'])]
+    public function register(Request $request, UserPasswordEncoderInterface  $passwordEncoder, EntityManagerInterface $em): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if($data['password'] == $data['passwordconfirm']){
+            $user = new User();
+            $user->setEmail($data['email']);
+            $user->setPassword($passwordEncoder->encodePassword($user, $data['password']));
+            $em->persist($user);
+            $em->flush();
+        }
+
+        return new Response('User registered!', Response::HTTP_CREATED);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

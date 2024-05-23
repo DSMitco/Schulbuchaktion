@@ -1,31 +1,20 @@
 <script setup>
-import { ref } from 'vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import Menubar from "primevue/menubar";
 
-const email = ref('');
-const password = ref('');
-
-const login = () => {
-  // Your login logic here
+const reg = () => {
+    console.log("You clicked register")
 };
+
 </script>
 
 <template>
-  <Menubar :model="items" class="menubar">
-    <template #start>
-      <a href="/">
-        <img src="@/assets/book_icon.png" alt="icon book" class="icon-book" />
-      </a>
-    </template>
-  </Menubar>
   <div class="body">
     <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <h1 class="headline">Registrierung - SBA</h1>
-          <form @submit.prevent="login">
+          <form @submit.prevent="register">
             <div class="form-group">
               <div class="input-wrapper">
                 <InputText id="email" v-model="email" class="form-control" placeholder="E-Mail" />
@@ -34,10 +23,10 @@ const login = () => {
                 <InputText id="password" v-model="password" class="form-control" type="password" placeholder="Passwort" />
               </div>
               <div class="input-wrapper">
-                <InputText id="password" v-model="password" class="form-control" type="password" placeholder="Passwort wiederholen" />
+                <InputText id="passwordconfirm" v-model="passwordconfirm" class="form-control" type="password" placeholder="Passwort wiederholen" />
               </div>
               <div class="input-wrapper">
-                <Button label="Registrieren" type="submit" class="btn btn-primary" />
+                <Button @click="reg" label="Registrieren" type="submit" class="btn btn-primary" />
               </div>
             </div>
 
@@ -48,6 +37,37 @@ const login = () => {
   </div>
 
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'Register',
+  data() {
+    return {
+      email: '',
+      password: '',
+      passwordconfirm: '',
+    }
+  },
+  methods: {
+    async register() {
+      try {
+        await axios.post('http://localhost:80/register/register', {
+          email: this.email,
+          password: this.password,
+          passwordconfirm: this.passwordconfirm
+        })
+        this.$router.push('/login')
+        console.log('Registered')
+      } catch (error) {
+        console.error('Registration failed ', error)
+      }
+    }
+  }
+}
+
+</script>
 
 <style scoped>
 @import 'primevue/resources/primevue.min.css';
@@ -111,22 +131,5 @@ const login = () => {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.book-icon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50px;
-  height: 50px;
-}
-
-.icon-book{
-  width: 2rem;
-  height: 2rem;
-  margin-right: 1rem;
-}
-.menubar {
-  background-color: #4C4A51;
 }
 </style>

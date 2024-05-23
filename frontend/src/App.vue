@@ -15,7 +15,7 @@ fetchData();
 </script>
 
 <template>
-<LoginView/>
+  <RouterView></RouterView>
 <!--
 
 Überprüfen, ob der Login Button bei der LoginView gedrückt wurde. Wen n ja -> weiterleiten auf die HomeView

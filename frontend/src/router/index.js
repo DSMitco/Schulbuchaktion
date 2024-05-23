@@ -9,6 +9,7 @@ import LoginView from '../views/LoginView.vue'
 import OrderListView from '../views/OrderList.vue'
 import OrderOverview from '../views/OrderOverview.vue'
 import ImportView from '../views/ImportView.vue';
+import RegisterView from "@/views/RegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,9 +64,14 @@ const router = createRouter({
       component: OrderOverview
     },
     {
-      path: '/importView',
+      path: '/import',
       name: 'importView',
       component: ImportView
+    },
+    {
+      path: '/register',
+      name: 'registerView',
+      component: RegisterView
     }
   ]
 })
