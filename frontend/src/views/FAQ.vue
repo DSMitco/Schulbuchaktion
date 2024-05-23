@@ -30,5 +30,5 @@
   <br>
   <h2>8. Wie kann ich technische Probleme mit der Webapplikation lösen?</h2>
   <p>Für technische Probleme oder Unterstützung bei der Nutzung der Webapplikation bei Schuladministratoren melden.</p>
-
+  <br>
 </template>

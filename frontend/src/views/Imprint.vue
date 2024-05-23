@@ -4,7 +4,6 @@
 
 <template>
   <h1>Impressum</h1>
-
   <p><b>Informationen und Offenlegung gemäß &sect;5 (1) ECG, &sect; 25 MedienG, &sect; 63 GewO und &sect; 14 UGB</b></p>
   <p><b>Webseitenbetreiber:</b> HTL Steyr</p>
   <p><b>Anschrift:</b> Schlüsselhofgasse 63, 4400 Steyr</p>

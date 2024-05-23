@@ -7,28 +7,8 @@ import Menubar from "primevue/menubar";
 const email = ref('');
 const password = ref('');
 
-const login = async () => {
-  try {
-    const formData = new FormData();
-    formData.append('email', email);
-
-    const response = await fetch('http://localhost:80/register/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: formData
-    })
-
-    if (!response.ok) {
-      throw new Error('Login failed');
-    }
-
-    const data = await response.text();
-    console.log(data)
-  } catch (error) {
-    console.error('Error:', error);
-  }
+const login = () => {
+  // Your login logic here
 };
 </script>
 
@@ -44,7 +24,7 @@ const login = async () => {
     <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <h1 class="headline">Login - SBA</h1>
+          <h1 class="headline">Registrierung - SBA</h1>
           <form @submit.prevent="login">
             <div class="form-group">
               <div class="input-wrapper">
@@ -54,9 +34,13 @@ const login = async () => {
                 <InputText id="password" v-model="password" class="form-control" type="password" placeholder="Passwort" />
               </div>
               <div class="input-wrapper">
-                <Button @click="login" label="Login" type="submit" class="btn btn-primary" />
+                <InputText id="password" v-model="password" class="form-control" type="password" placeholder="Passwort wiederholen" />
+              </div>
+              <div class="input-wrapper">
+                <Button label="Registrieren" type="submit" class="btn btn-primary" />
               </div>
             </div>
+
           </form>
         </div>
       </div>
