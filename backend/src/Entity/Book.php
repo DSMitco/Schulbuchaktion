@@ -34,16 +34,16 @@ class Book
     private ?string $schoolform = null;
 
     #[ORM\Column(name: "teacherversion", type: Types::BOOLEAN, nullable: true)]
-    private ?Boolean $teacherversion = null;
+    private ?bool $teacherversion = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $info = null;
 
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
-    private ?Boolean $ebook = null;
+    private ?bool $ebook = null;
 
     #[ORM\Column(name: "ebook_plus", type: Types::BOOLEAN, options: ['default' => false])]
-    private ?Boolean $ebookplus = null;
+    private ?bool $ebookplus = null;
 
     #[ORM\Column(name: "mainbook_id", type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $mainbookid = null;
