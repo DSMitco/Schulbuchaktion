@@ -24,7 +24,7 @@ const login = () => {
     <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <h1 class="headline">Login - SBA</h1>
+          <h1 class="headline">Registrierung - SBA</h1>
           <form @submit.prevent="login">
             <div class="form-group">
               <div class="input-wrapper">
@@ -34,7 +34,10 @@ const login = () => {
                 <InputText id="password" v-model="password" class="form-control" type="password" placeholder="Passwort" />
               </div>
               <div class="input-wrapper">
-                <Button label="Login" type="submit" class="btn btn-primary" />
+                <InputText id="password" v-model="password" class="form-control" type="password" placeholder="Passwort wiederholen" />
+              </div>
+              <div class="input-wrapper">
+                <Button label="Registrieren" type="submit" class="btn btn-primary" />
               </div>
             </div>
 
