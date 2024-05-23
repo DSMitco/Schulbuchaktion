@@ -1,11 +1,11 @@
 <script setup>
 import 'primevue/resources/themes/aura-dark-amber/theme.css'
-import {RouterLink} from "vue-router";
+import { RouterLink } from "vue-router";
 
 const items = [
   {label: 'Bestellliste', to: 'orderList'},
-  {label: 'Bestellübersicht', to: 'orderOverview'},
-  {label: 'Klassenübersicht', to: 'classList'},
+  {label: 'Bestellübersicht',  to: 'orderOverView'},
+  {label: 'Klassenübersicht',  to: 'classList'},
 
 ];
 
@@ -16,7 +16,6 @@ const items = [
       <router-link :to="item.to" class="router-link">{{item.label}}</router-link>
     </div>
   </div>
-
 </template>
 
 <style scoped>

@@ -210,6 +210,10 @@ class ReadExcelController extends AbstractController {
         return new Response('Data successfully written to the database');
     }
 
-
+    #[Route('/test', name: 'test')]
+    public function test(Request $request, EntityManagerInterface $em, BookRepository $br): Response
+    {
+        return new Response('Test successfull');
+    }
 
 }

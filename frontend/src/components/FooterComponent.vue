@@ -1,5 +1,11 @@
 <script setup>
+import { RouterLink } from "vue-router";
 
+const items = [
+  { label: 'Impressum', to: 'imprintView' },
+  { label: 'AGB', to: 'AGBView' },
+  { label: 'FAQ', to: 'FAQView' },
+]
 
 </script>
 
@@ -9,10 +15,10 @@
       <div class="row">
         <div class="footer-col">
           <h4>Info</h4>
-          <ul>
-            <li><a href="#">Impressum</a></li>
-            <li><a href="#">AGB</a></li>
-            <li><a href="#">FAQ</a></li>
+          <ul v-for="(item, index) in items" :key="index">
+            <li><router-link :to="{name: item.to}" class="router-link">
+              {{ item.label }}
+            </router-link></li>
           </ul>
         </div>
         <div class="footer-col">
