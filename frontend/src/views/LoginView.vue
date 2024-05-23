@@ -82,7 +82,6 @@ const login = () => {
 
 .form-control, .btn-primary {
   flex-grow: 1;
-  margin-left: 10px;
   width: 100%;
 }
 
