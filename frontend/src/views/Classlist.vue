@@ -1,7 +1,21 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'primevue/resources/themes/aura-light-green/theme.css'
+
+const classes = ref([]);
+
+onMounted(async () => {
+  await fetchClasses();
+});
+
+const fetchClasses = async () => {
+  const response = await fetch('http://localhost:80/getClasses');
+  const data = await response.json();
+  classes.value = data;
+  console.log(classes.value);
+}
 
 </script>
 
@@ -9,11 +23,12 @@ import 'primevue/resources/themes/aura-light-green/theme.css'
   <section class="sec">
     <div class="borderDiv">
     <div class="list">
-      <DataTable tableStyle="min-width: 50rem; background-color: white">
-        <Column field="klasse" header="Klassenname"></Column>
-        <Column field="abteilung" header="Abteilung"></Column>
-        <Column field="anzahl" header="Anzahl der Schüler"></Column>
-        <Column field="jahr" header="Schuljahr"></Column>
+      <DataTable v-if="classes.value.length > 0" :value="classes.value" tableStyle="min-width: 50rem; background-color: white">
+        <Column field="name" header="Klassenname"></Column>
+        <Column field="department" header="Abteilung"></Column>
+        <Column field="studentsamount" header="Anzahl der Schüler"></Column>
+        <Column field="repamount" header="Anzahl der Repetenten"></Column>
+        <Column field="year" header="Schuljahr"></Column>
       </DataTable>
     </div>
     </div>
