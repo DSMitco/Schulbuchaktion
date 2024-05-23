@@ -7,13 +7,28 @@ const email = ref('');
 const password = ref('');
 
 const login = async () => {
-  const response = await fetch('http://localhost:80/readExcel/doRead');
-  const data = await response.text();
-  console.log(data);
-}
+  try {
+    const formData = new FormData();
+    formData.append('email', email);
 
-fetchData();
+    const response = await fetch('http://localhost:80/register/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: formData
+    })
 
+    if (!response.ok) {
+      throw new Error('Login failed');
+    }
+
+    const data = await response.text();
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 </script>
 
 <template>
@@ -31,10 +46,9 @@ fetchData();
                 <InputText id="password" v-model="password" class="form-control" type="password" placeholder="Passwort" />
               </div>
               <div class="input-wrapper">
-                <Button label="Login" type="submit" class="btn btn-primary" />
+                <Button @click="login" label="Login" type="submit" class="btn btn-primary" />
               </div>
             </div>
-
           </form>
         </div>
       </div>

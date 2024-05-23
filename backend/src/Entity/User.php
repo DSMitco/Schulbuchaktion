@@ -102,10 +102,11 @@ class User
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password, ): static
     {
         $this->password = $password;
 
         return $this;
     }
+
 }
