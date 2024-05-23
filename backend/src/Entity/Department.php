@@ -29,7 +29,7 @@ class Department
     private ?string $umew = null;
 
     #[ORM\OneToOne(targetEntity: User::class, cascade: ["persist", "remove"])]
-    #[ORM\JoinColumn(name: "head_of_department", referencedColumnName: "user_id", nullable: false)]
+    #[ORM\JoinColumn(name: "head_of_department", referencedColumnName: "user_id", nullable: true)]
     private ?User $headofdepartment = null;
 
     // This will not be a column in the database

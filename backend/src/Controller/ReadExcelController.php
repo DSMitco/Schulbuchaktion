@@ -19,20 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 
-class ReadCSVController extends AbstractController {
-
-    #[Route(path: '/list', name: 'list', methods: ['GET'])]
-    public function list(Request $request, EntityManagerInterface $em, BookRepository $br): Response
-    {
-
-        try {
-            $books = $em->getRepository(Book::class)->findAll();
-        } catch (\Exception $e) {
-
-            return new Response($e);
-        }
-        return new Response('Data successfully written to the database');
-    }
+class ReadExcelController extends AbstractController {
 
     #[Route('/doRead', name: 'doRead')]
     public function index(Request $request, EntityManagerInterface $em, BookRepository $br): Response
@@ -40,8 +27,7 @@ class ReadCSVController extends AbstractController {
         $file = $request->files->get('file'); // get the file from the sent request
 
         if ($file == null) {
-            //return new Response('No file was uploaded');
-            $file = 'Schulbuchliste_4100_2023_2024.xlsx';
+            return new Response('No file was uploaded');
         }
 
         $fileFolder = __DIR__ . '/../../public/uploads/';  //choose the folder in which the uploaded file will be stored
@@ -71,7 +57,65 @@ class ReadCSVController extends AbstractController {
             return new Response($e);
         }
 
-        // Durchlaufen Sie die Zeilen des ersten Arbeitsblatts
+        $createdSubjects = [];
+        $createdGrades = [];
+        $createdPublishers = [];
+
+        // creates grades, subjects and publishers
+        foreach ($worksheet1->getRowIterator() as $row) {
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(FALSE);
+
+            $data = [];
+            foreach ($cellIterator as $cell) {
+                $data[] = $cell->getValue();
+            }
+
+            if ($data[0] == 'BNR') {
+                continue;
+            }
+
+            // Create a new subject if it does not exist
+            $subject = $em->getRepository(Subject::class)->findByFullName([$data[5]]);
+            if ($subject == null && !in_array($data[5], $createdSubjects)) {
+                $subject = new Subject();
+                $subject->setFullname($data[5]);
+                $em->persist($subject);
+                $createdSubjects[] = $data[5];
+            }
+
+            // Splitts the grades if there are multiple --> format of grade like 1=2=3 etc.
+            $grades = explode('=', $data[6]);
+
+            // Create a new grade if it does not exist
+            foreach ($grades as $gradeValue) {
+                $dbGrade = $em->getRepository(Schoolgrade::class)->findByGrade($gradeValue);
+
+                if ($dbGrade == null && !in_array($gradeValue, $createdGrades)) {
+                    $grade = new Schoolgrade();
+                    $grade->setGrade($gradeValue);
+                    $em->persist($grade);
+                    $createdGrades[] = $gradeValue;
+                }
+            }
+
+            // Create a new publisher if it does not exist
+            $vnr = (int)$data[9];
+
+            $publisher = $em->getRepository(Publisher::class)->findByVnr([$vnr]);
+            //Create a new publisher if it does not exist
+            if ($publisher == null && !in_array($vnr, $createdPublishers)) {
+                $publisher = new Publisher();
+                $publisher->setVnr($vnr);
+                $publisher->setName($data[10]);
+                $em->persist($publisher);
+                $createdPublishers[] = $vnr;
+            }
+        }
+        // Save all changes to the database
+        $em->flush();
+
+        //create the books
         foreach ($worksheet1->getRowIterator() as $row) {
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(FALSE); // Alle Zellen, auch leere, durchlaufen
@@ -108,31 +152,18 @@ class ReadCSVController extends AbstractController {
                 $book->setListtype((int)$data[3]);
                 $book->setSchoolform((int)$data[4]);
 
-                //@TODO: Create a new Subject and Schoolgrade if needed
                 $subject = $em->getRepository(Subject::class)->findByFullName([$data[5]]);
-                //Create a new subject if it does not exist
-                if ($subject == null) {
-                    $subject = new Subject();
-                    $subject->setFullname($data[5]);
-                    $em->persist($subject);
-                }
                 $book->setSubject($subject);
 
                 //Splitts the grades if there are multiple --> format of grade like 1=2=3 etc.
                 $grades = explode('=', $data[6]);
 
-
                 //Add the grades to the book
                 foreach ($grades as $gradeValue) {
                     $grade = $em->getRepository(Schoolgrade::class)->findByGrade($gradeValue);
-                    //Create a new grade if it does not exist
-                    if (!$grade) {
-                        $grade = new Schoolgrade();
-                        $grade->setGrade($gradeValue);
-                        $em->persist($grade);
-                    }
-                    $book->addGrade($grade);
-                    $grade->addBook($book);
+
+                    $book->addGrade($grade[0]);
+                    $grade[0]->addBook($book);
                 }
 
                 if ($data[7] == null) {
@@ -146,14 +177,6 @@ class ReadCSVController extends AbstractController {
                 $vnr = (int)$data[9];
 
                 $publisher = $em->getRepository(Publisher::class)->findByVnr([$vnr]);
-                //Create a new publisher if it does not exist
-                if ($publisher == null) {
-                    $publisher = new Publisher();
-                    $publisher->setVnr($vnr);
-                    $publisher->setName($data[10]);
-                    $em->persist($publisher);
-                }
-
                 $book->setPublisher($publisher);
 
                 if ($data[11] == null) {
@@ -180,11 +203,17 @@ class ReadCSVController extends AbstractController {
             }
         }
         $em->flush(); // Save all changes to the database
-        // Die datei nach dem Bearbeiten löschen
+
+        // Deletes the file after it has been read
+        unlink($filePath);
 
         return new Response('Data successfully written to the database');
     }
 
-
+    #[Route('/test', name: 'test')]
+    public function test(Request $request, EntityManagerInterface $em, BookRepository $br): Response
+    {
+        return new Response('Test successfull');
+    }
 
 }
