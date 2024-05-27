@@ -53,11 +53,12 @@ export default {
   methods: {
     async register() {
       try {
-        await axios.post('http://localhost:80/register/register', {
+        const response = await axios.post('http://localhost:80/authenticate/register', {
           email: this.email,
           password: this.password,
           passwordconfirm: this.passwordconfirm
         })
+        console.log(response)
         this.$router.push('/login')
         console.log('Registered')
       } catch (error) {

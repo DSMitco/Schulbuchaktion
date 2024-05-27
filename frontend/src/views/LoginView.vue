@@ -12,7 +12,7 @@ const login = async () => {
     const formData = new FormData();
     formData.append('email', email);
 
-    const response = await fetch('http://localhost:80/register/login', {
+    const response = await fetch('http://localhost:80/authenticate/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
