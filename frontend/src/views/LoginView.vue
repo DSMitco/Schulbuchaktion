@@ -74,14 +74,14 @@ const login = () => {
 .form-control, .btn-primary {
   flex-grow: 1;
   margin-left: 10px;
-  width: 100%; /* Make the input fields and button the same width */
+  width: 100%;
 }
 
 .btn-primary {
   display: flex;
   margin-top: 20px;
   background-color: #652EA8;
-  color: white; /* Make the button text white */
+  color: white;
 }
 
 .input-wrapper:hover {

@@ -67,6 +67,7 @@ ul{
 .footer-col .social-links a:hover{
     color: #24262b;
     background-color: #ffffff;
+    opacity: 0.5;
 }
 
 .copyright {
@@ -87,6 +88,7 @@ ul{
     display: inline-block;
     background-size: 100%;
 }
+
 
 /*responsive*/
 @media(max-width: 47rem){
