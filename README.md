@@ -8,5 +8,5 @@ Ein Programm für die Schulbuchaktion der HTL-Steyr
 4. Im Ordner "frontend" Command "npm i vite" falls vite nicht vorhanden ist.<br>
 5. "npm run dev" ausführen um den port zu bekommen und den server local zu starten.<br>
 6. "backend" Ordner auswählen, dann "docker_schulbuchaktion" auswählen unddiese zwei Befehle ausführen (Note: Docker muss gestartet sein)<br>
-"docker compose build"<br>
+"docker compose build"<br> 
 "docker compose up"<br>
