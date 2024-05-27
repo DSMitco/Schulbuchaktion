@@ -34,8 +34,6 @@ onMounted(async () => {
       </DataTable>
       </div>
 
-
-
     </div>
     </div>
   </section>
