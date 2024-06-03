@@ -64,17 +64,17 @@ const active = ref(false);
               <Column field="Jahr" header="Schuljahr"></Column>
               <Column field="Buchbezeichnung" header="Buchbezeichnung">
                 <template #body="slotProps">
-                  <component :is="slotProps.data.Buchbezeichnung"> </component>
+                <BuchDropDown/>
                 </template>
               </Column>
               <Column field="Klasse" header="Klasse">
                 <template #body="slotProps">
-                  <component :is="slotProps.data.Klasse"> </component>
+                  <KlasseDropDown/>
                 </template>
               </Column>
               <Column field="Repetenten" header="Repetenten">
                 <template #body="slotProps">
-                  <component :is="slotProps.data.Repetenten"> </component>
+                  <RepetentenDropDown/>
                 </template>
               </Column>
               <Column field="E-Book" header="E-Book">
@@ -90,7 +90,7 @@ const active = ref(false);
 
               <Column field="crudAction"  header="">
                 <template #body="slotProps">
-                  <component :is="slotProps.data.crudAction"> </component>
+                  <DocumentButton/>
                 </template>
 
               </Column>

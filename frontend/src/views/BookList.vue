@@ -5,18 +5,18 @@ import Column from 'primevue/column';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import DocumentButton from "@/components/DocumentButton.vue";
 
-const classes = ref([]);
+const books = ref([]);
 
-const fetchClasses = async () => {
+const fetchBooks = async () => {
 
-  const response = await fetch('http://localhost:80/getClasses');
+  const response = await fetch('http://localhost:80/getBooksOverview');
   const data = await response.json();
-  classes.value.push(data);
-  console.log(classes);
+  books.value.push(data);
+  console.log(books);
 }
 
 onMounted(async () => {
-  await fetchClasses();
+  await fetchBooks();
 });
 
 </script>
@@ -25,16 +25,16 @@ onMounted(async () => {
   <section class="sec">
     <div class="borderDiv">
     <div class="list" >
-      <div v-for="classItem in classes">
-      <DataTable :value="classItem" tableStyle="min-width: 50rem; background-color: white">
-        <Column field="name" header="Klassenname"></Column>
-        <Column field="department" header="Abteilung"></Column>
-        <Column field="studentsamount" header="Anzahl der Schüler"></Column>
-        <Column field="repamount" header="Anzahl der Repetenten"></Column>
-        <Column field="year" header="Schuljahr"></Column>
+      <div v-for="bookItem in books">
+      <DataTable :value="bookItem" tableStyle="min-width: 50rem; background-color: white">
+        <Column field="title" header="Buchtitel"></Column>
+        <Column field="bnr" header="Buchnummer"></Column>
+        <Column field="subject" header="Fach"></Column>
+        <Column field="publisher" header="Verlag"></Column>
+        <Column field="price" header="Preis"></Column>
         <Column field="crudAction" header="">
           <template #body="slotProps">
-            <DocumentButton />
+            <Button/>
           </template>
 
         </Column>
@@ -47,9 +47,6 @@ onMounted(async () => {
     </div>
   </section>
 </template>
-
-<script>
-</script>
 
 <style scoped>
 
