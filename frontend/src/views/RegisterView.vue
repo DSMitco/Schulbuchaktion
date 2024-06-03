@@ -1,10 +1,28 @@
 <script setup>
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import {ref} from "vue";
+import axios from "axios";
 
-const reg = () => {
-    console.log("You clicked register")
+const email = ref('');
+const password = ref('');
+const passwordconfirm = ref('');
+
+const register = async () => {
+  try {
+    console.log(email.value, password.value, passwordconfirm.value);
+    const response = await axios.post('http://localhost/authenticate/register', {
+      email: email.value,
+      password: password.value,
+      passwordconfirm: passwordconfirm.value,
+    });
+    console.log(response);
+    // this.$router.push('/login');
+  } catch (error) {
+    console.error('Registration failed', error.response ? error.response.data : error.message);
+  }
 };
+
 
 </script>
 
@@ -26,49 +44,17 @@ const reg = () => {
                 <InputText id="passwordconfirm" v-model="passwordconfirm" class="form-control" type="password" placeholder="Passwort wiederholen" />
               </div>
               <div class="input-wrapper">
-                <Button @click="reg" label="Registrieren" type="submit" class="btn btn-primary" />
+                <Button label="Registrieren" type="submit" class="btn btn-primary" />
               </div>
             </div>
-
           </form>
+          <p></p>
         </div>
       </div>
     </div>
   </div>
 
 </template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  name: 'Register',
-  data() {
-    return {
-      email: '',
-      password: '',
-      passwordconfirm: '',
-    }
-  },
-  methods: {
-    async register() {
-      try {
-        const response = await axios.post('http://localhost:80/authenticate/register', {
-          email: this.email,
-          password: this.password,
-          passwordconfirm: this.passwordconfirm
-        })
-        console.log(response)
-        this.$router.push('/login')
-        console.log('Registered')
-      } catch (error) {
-        console.error('Registration failed ', error)
-      }
-    }
-  }
-}
-
-</script>
 
 <style scoped>
 @import 'primevue/resources/primevue.min.css';
