@@ -144,7 +144,9 @@ class ReadExcelController extends AbstractController {
                 $book->setTitle($data[2]);
                 $book->setListtype((int)$data[3]);
                 $book->setSchoolform((int)$data[4]);
-                $book->setBookprice((float)$data[12]);
+                $bookprice = str_replace(',', '.', $data[12]);
+                $bookprice = (float)$bookprice * 100;
+                $book->setBookprice($bookprice);
             } else {
                 //Create a new book if it does not exist
                 $book = new Book();
@@ -188,7 +190,10 @@ class ReadExcelController extends AbstractController {
                     $book->setMainbookid($data[11]);
                 }
 
-                $book->setBookprice((float)$data[12]);
+                $bookprice = str_replace(',', '.', $data[12]);
+                $bookprice = (float)$bookprice * 100;
+                $book->setBookprice($bookprice);
+
                 if ($data[15] == null) {
                     $book->setEbook(false);
                 } else {
