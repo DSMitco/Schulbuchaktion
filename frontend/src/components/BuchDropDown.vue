@@ -1,15 +1,22 @@
 <script setup>
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 import Dropdown from "primevue/dropdown";
 
 const selectedBook = ref();
-const books = ref([
-  { name: 'New York', code: 'NY' },
-  { name: 'Rome', code: 'RM' },
-  { name: 'London', code: 'LDN' },
-  { name: 'Istanbul', code: 'IST' },
-  { name: 'Paris', code: 'PRS' }
-]);
+const books = ref([]);
+
+const fetchBooks = async () => {
+
+  const response = await fetch('http://localhost:80/getBookNames');
+  const data = await response.json();
+  books.value = [...data];
+  console.log(books);
+}
+
+onMounted(async () => {
+  await fetchBooks();
+});
+
 </script>
 
 <template>

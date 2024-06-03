@@ -53,7 +53,6 @@ class ReadExcelController extends AbstractController {
         try {
             $books = $em->getRepository(Book::class)->findAll();
         } catch (\Exception $e) {
-
             return new Response($e);
         }
 
@@ -141,7 +140,13 @@ class ReadExcelController extends AbstractController {
             //Update the price if the book already exists
             if ($exist) {
                 $book = $em->getRepository(Book::class)->findBookByBnr($data[0]);
-                $book->setBookprice((float)$data[12]);
+                $book->setShorttitle($data[1]);
+                $book->setTitle($data[2]);
+                $book->setListtype((int)$data[3]);
+                $book->setSchoolform((int)$data[4]);
+                $bookprice = str_replace(',', '.', $data[12]);
+                $bookprice = (float)$bookprice * 100;
+                $book->setBookprice($bookprice);
             } else {
                 //Create a new book if it does not exist
                 $book = new Book();
@@ -185,7 +190,10 @@ class ReadExcelController extends AbstractController {
                     $book->setMainbookid($data[11]);
                 }
 
-                $book->setBookprice((float)$data[12]);
+                $bookprice = str_replace(',', '.', $data[12]);
+                $bookprice = (float)$bookprice * 100;
+                $book->setBookprice($bookprice);
+
                 if ($data[15] == null) {
                     $book->setEbook(false);
                 } else {

@@ -11,10 +11,9 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
-    "bootstrap-vue": "^2.23.1",
     "pinia": "^2.1.7",
-    "primeicons": "^4.1.0",
-    "primevue": "^3.51.0",
+    "primeicons": "^7.0.0",
+    "primevue": "^3.52.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

@@ -46,4 +46,19 @@ class SchoolclassController extends AbstractController
         }
         return $this->json($response);
     }
+
+    #[Route('/getClassNames', name: 'getClassNames')]
+    public function getClassNames(): Response
+    {
+        $classes = $this->schoolclassRepository->findAll();
+
+        $response = [];
+        foreach ($classes as $class) {
+            $response[] = [
+                'id' => $class->getId(),
+                'name' => $class->getName(),
+            ];
+        }
+        return $this->json($response);
+    }
 }

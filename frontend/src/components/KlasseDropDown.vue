@@ -1,15 +1,21 @@
 <script setup>
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 import Dropdown from "primevue/dropdown";
 
 const selectedClass = ref();
-const classes = ref([
-  { name: 'New York', code: 'NY' },
-  { name: 'Rome', code: 'RM' },
-  { name: 'London', code: 'LDN' },
-  { name: 'Istanbul', code: 'IST' },
-  { name: 'Paris', code: 'PRS' }
-]);
+const classes = ref([]);
+
+const fetchClasses = async () => {
+  const response = await fetch('http://localhost:80/getClassNames');
+  const data = await response.json();
+  classes.value = [...data];
+  console.log(classes);
+}
+
+onMounted(async () => {
+  await fetchClasses()
+});
+
 </script>
 
 <template>
