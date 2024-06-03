@@ -6,6 +6,7 @@
   import {ref} from "vue";
 
   const menu = ref();
+
   const edit = () => {
 
     alert("Edit has been clicked");
@@ -16,6 +17,7 @@
   };
   const deleteData = () => {
     alert("Delete has been clicked");
+
   };
   const items = ref([
 

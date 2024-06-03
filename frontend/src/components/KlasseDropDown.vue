@@ -19,8 +19,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="card flex justify-content-center">
-    <Dropdown v-model="selectedClass" variant="filled" :options="classes" optionLabel="name" placeholder="Klasse auswählen" class="w-full md:w-14rem" />
+  <div class="card flex justify-content-center" v-for="classItem in classes">
+    <Dropdown v-model="selectedClass" variant="filled" :options="cllass" optionLabel="name" placeholder="Klasse auswählen" class="w-full md:w-14rem" />
   </div>
 </template>
 
