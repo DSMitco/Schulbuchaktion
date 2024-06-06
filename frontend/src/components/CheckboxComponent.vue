@@ -3,12 +3,13 @@
 import { ref } from "vue";
 import Checkbox from "primevue/checkbox";
 
-const checked = ref(false);
+const checked = ref();
+
 </script>
 
 <template>
   <div class="card flex justify-content-center">
-    <Checkbox v-model="checked" :binary="true" />
+    <Checkbox v-model="checked" :binary="true" disabled />
   </div>
 </template>
 

@@ -55,8 +55,6 @@ const active = ref(false);
 
 
     <div id="bestell_container">
-
-      <button class="LoneBTN">Neu</button>
       <section class="sec">
         <div class="borderDiv">
           <div class="list">

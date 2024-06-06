@@ -27,14 +27,14 @@ onMounted(async () => {
     <div class="list" >
       <div v-for="bookItem in books">
       <DataTable :value="bookItem" tableStyle="min-width: 50rem; background-color: white">
-        <Column field="title" header="Buchtitel"></Column>
+        <Column field="title" header="Buchtitel" class="titleStyle"></Column>
         <Column field="bnr" header="Buchnummer"></Column>
         <Column field="subject" header="Fach"></Column>
         <Column field="publisher" header="Verlag"></Column>
         <Column field="price" header="Preis"></Column>
         <Column field="crudAction" header="">
           <template #body="slotProps">
-            <Button/>
+            <Button>Bestellen</Button>
           </template>
 
         </Column>
@@ -57,7 +57,7 @@ onMounted(async () => {
 }
 
 .borderDiv {
-  width: 65%;
+  width: 90%;
   display: flex;
   padding: 1%;
   justify-content: center;
@@ -72,6 +72,9 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.titleStyle{
+  width:50rem
 }
 
 
