@@ -9,6 +9,7 @@ import AGB from "@/views/AGB.vue";
 import FAQ from "@/views/FAQ.vue";
 import NavView from "@/components/NavComponent.vue";
 
+/*
 const fetchData = async () => {
   const response = await fetch('http://localhost:80/readExcel/doRead');
   const data = await response.text();
@@ -16,7 +17,7 @@ const fetchData = async () => {
 }
 
 fetchData();
-
+ */
 </script>
 
 
