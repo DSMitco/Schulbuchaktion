@@ -1,5 +1,5 @@
 <script setup >
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'primevue/resources/themes/aura-light-green/theme.css'
@@ -26,44 +26,29 @@ import BuchDropDown from "@/components/BuchDropDown.vue";
 -- soll haben:
 --> duplizieren
 */
-const test = [
-  {
-    Jahr: '2023/24',
-    Buchbezeichnung: BuchDropDown ,//ComboBox,
-    Klasse: KlasseDropDown,
-    Repetenten: RepetentenDropDown,
-    EBook:CheckboxComponent,
-    EBookPlus: CheckboxComponent,
-    crudAction: DocumentButton
-  },
-  {
-    Jahr: '2023/24',
-    Buchbezeichnung: BuchDropDown ,//ComboBox,
-    Klasse:KlasseDropDown ,//ComboBox,
-    Repetenten: RepetentenDropDown, //ComboBox
-    EBook:CheckboxComponent,
-    EBookPlus: CheckboxComponent,
-    crudAction: DocumentButton
-  }
-]
+const orders = ref([]);
 
-const active = ref(false);
+const fetchOrders = async () => {
+  const response = await fetch('http://localhost:80/getBookOrders');
+  const data = await response.json();
+  orders.value.push(data);
+  console.log(orders);
+}
+
+onMounted(async () => {
+  await fetchOrders();
+});
 </script>
 
 <template>
-
-
-
     <div id="bestell_container">
       <section class="sec">
         <div class="borderDiv">
           <div class="list">
-            <DataTable :value="test" tableStyle="min-width: 50rem; background-color: white">
+            <div v-for="order in orders">
+            <DataTable :value="order" tableStyle="min-width: 50rem; background-color: white">
               <Column field="Jahr" header="Schuljahr"></Column>
               <Column field="Buchbezeichnung" header="Buchbezeichnung">
-                <template #body="slotProps">
-                <BuchDropDown/>
-                </template>
               </Column>
               <Column field="Klasse" header="Klasse">
                 <template #body="slotProps">
@@ -95,10 +80,8 @@ const active = ref(false);
             </DataTable>
           </div>
         </div>
-
-
+      </div>
       </section>
-
   </div>
 
 </template>

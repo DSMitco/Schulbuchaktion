@@ -3,16 +3,22 @@ import { ref, onMounted } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'primevue/resources/themes/aura-light-green/theme.css'
-import DocumentButton from "@/components/DocumentButton.vue";
 
 const books = ref([]);
 
 const fetchBooks = async () => {
-
   const response = await fetch('http://localhost:80/getBooksOverview');
   const data = await response.json();
   books.value.push(data);
   console.log(books);
+}
+
+const addBook = async (bnr) => {
+  const response = await fetch(`http://localhost:80/addBook/${bnr}`, {
+    method: 'POST',
+  });
+  const data = await response.text();
+  console.log(data);
 }
 
 onMounted(async () => {
@@ -34,15 +40,11 @@ onMounted(async () => {
         <Column field="price" header="Preis"></Column>
         <Column field="crudAction" header="">
           <template #body="slotProps">
-            <Button>Bestellen</Button>
+            <Button @click="addBook(slotProps.data.bnr)">Bestellen</Button>
           </template>
-
         </Column>
       </DataTable>
       </div>
-
-
-
     </div>
     </div>
   </section>

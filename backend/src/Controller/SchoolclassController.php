@@ -61,4 +61,12 @@ class SchoolclassController extends AbstractController
         }
         return $this->json($response);
     }
+
+    #[Route('/changeClass/{classID}', name: 'changeClass')]
+    public function changeClass($classID): Response
+    {
+        $classID = 1;
+        return new Response('Class ' . $classID . ' changed');
+    }
+
 }

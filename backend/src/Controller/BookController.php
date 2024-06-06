@@ -58,7 +58,7 @@ class BookController extends AbstractController
                 'subject' => $subject->getFullname(),
                 'publisher' => $publisher->getName(),
                 'title' => $book->getTitle(),
-                'price' => $book->getBookprice(),
+                'price' => number_format((float)$book->getBookprice() / 100, 2),
                 'ebook' => ($book->getEbook() == 1),
                 'ebookplus' => ($book->getEbookplus() == 1),
             ];

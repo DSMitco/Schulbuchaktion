@@ -15,20 +15,23 @@ class Bookorder
     #[ORM\Column(name: "book_order_id")]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
     private ?string $count = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false], nullable: true)]
     private ?bool $teacherCopy = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false], nullable: true)]
     private ?bool $ebook = null;
 
-    #[ORM\Column(name: "ebook_plus", type: Types::BOOLEAN, options: ['default' => false])]
+    #[ORM\Column(name: "ebook_plus", type: Types::BOOLEAN, options: ['default' => false], nullable: true)]
     private ?bool $ebookplus = null;
 
+    #[ORM\Column(name: "schoolyear", nullable: true)]
+    private ?string $schoolyear = null;
+
     #[ORM\ManyToOne(targetEntity: Schoolclass::class, inversedBy: "bookorders")]
-    #[ORM\JoinColumn(name: "schoolclass_id", referencedColumnName: "schoolclass_id", nullable: false)]
+    #[ORM\JoinColumn(name: "schoolclass_id", referencedColumnName: "schoolclass_id", nullable: true)]
     private ?Schoolclass $schoolclass = null;
 
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: "bookorders")]
@@ -102,6 +105,33 @@ class Bookorder
     public function setBook(?Book $book): void
     {
         $this->book = $book;
+    }
+
+    public function isTeacherCopy(): ?bool
+    {
+        return $this->teacherCopy;
+    }
+
+    public function isEbook(): ?bool
+    {
+        return $this->ebook;
+    }
+
+    public function isEbookplus(): ?bool
+    {
+        return $this->ebookplus;
+    }
+
+    public function getSchoolyear(): ?string
+    {
+        return $this->schoolyear;
+    }
+
+    public function setSchoolyear(?string $schoolyear): static
+    {
+        $this->schoolyear = $schoolyear;
+
+        return $this;
     }
 
 
