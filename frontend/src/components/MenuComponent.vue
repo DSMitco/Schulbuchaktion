@@ -3,6 +3,7 @@ import 'primevue/resources/themes/aura-dark-amber/theme.css'
 import { RouterLink } from "vue-router";
 
 const items = [
+  {label: 'Buchübersicht', to: 'bookList'},
   {label: 'Bestellliste', to: 'orderList'},
   {label: 'Bestellübersicht',  to: 'orderOverView'},
   {label: 'Klassenübersicht',  to: 'classList'},
@@ -23,7 +24,7 @@ const items = [
 .menu {
   display: flex;
   justify-content: center;
-  width: 33%;
+  width: 40%;
   background-color: #5A4F77;
   margin: 2% auto auto auto;
   border: 3px #CCA3FD;
