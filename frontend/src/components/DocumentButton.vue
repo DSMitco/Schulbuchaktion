@@ -6,19 +6,33 @@
   import {ref} from "vue";
 
   const menu = ref();
+  const edit = () => {
+
+    alert("Edit has been clicked");
+  };
+  const duplicate = () => {
+    
+    alert("Duplicate has been clicked");
+  };
+  const deleteData = () => {
+    alert("Delete has been clicked");
+  };
   const items = ref([
 
   {
     label: 'Bearbeiten',
     icon: 'pi pi-file-edit',
+    command: edit
   },
   {
     label: 'Duplizieren',
-    icon: 'pi pi-copy'
+    icon: 'pi pi-copy',
+    command: duplicate
   },
   {
     label: 'Löschen',
-    icon: 'pi pi-times'
+    icon: 'pi pi-times',
+    command: deleteData
   },
   {
     separator: true
