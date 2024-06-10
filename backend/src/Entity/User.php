@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,12 +18,6 @@ class User
 
     #[ORM\Column(name: "short_name", length: 255)]
     private ?string $shortname = null;
-
-    #[ORM\Column(name: "first_name", length: 255)]
-    private ?string $firstname = null;
-
-    #[ORM\Column(name: "last_name", length: 255)]
-    private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -45,30 +41,6 @@ class User
     public function setShortname(string $shortname): static
     {
         $this->shortname = $shortname;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): static
-    {
-        $this->lastname = $lastname;
 
         return $this;
     }
@@ -109,4 +81,23 @@ class User
         return $this;
     }
 
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function eraseCredentials(): void
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
 }

@@ -3,21 +3,24 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import {ref} from "vue";
 import axios from "axios";
+import { useRouter } from 'vue-router';
 
-const email = ref('');
-const password = ref('');
-const passwordconfirm = ref('');
+const email = ref('')
+const password = ref('')
+const passwordconfirm = ref('')
+const router = useRouter()
 
 const register = async () => {
   try {
-    console.log(email.value, password.value, passwordconfirm.value);
     const response = await axios.post('http://localhost/authenticate/register', {
       email: email.value,
       password: password.value,
       passwordconfirm: passwordconfirm.value,
-    });
+    })
     console.log(response);
-    // this.$router.push('/login');
+    if (response.status === 200) {
+      await router.push({name: 'loginView'})
+    }
   } catch (error) {
     console.error('Registration failed', error.response ? error.response.data : error.message);
   }

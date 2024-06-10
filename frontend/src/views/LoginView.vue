@@ -3,31 +3,28 @@ import { ref } from 'vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import {RouterLink} from "vue-router";
+import axios from "axios";
+import { useRouter } from 'vue-router';
 
-const email = ref('');
-const password = ref('');
+const email = ref('')
+const password = ref('')
+const router = useRouter()
 
 const login = async () => {
   try {
-    const formData = new FormData();
-    formData.append('email', email);
+    console.log(email.value, password.value)
+    const response = await axios.post('http://localhost/api/login', {
+      email: email.value,
+      password: password.value,
+    });
 
-    const response = await fetch('http://localhost:80/authenticate/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: formData
-    })
-
-    if (!response.ok) {
-      throw new Error('Login failed');
+    if (response.status === 200) {
+      const token = response.data.token;
+      localStorage.setItem('jwt', token);
+      //await router.push({name: 'home'})
     }
-
-    const data = await response.text();
-    console.log(data)
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Login failed', error.response ? error.response.data : error.message);
   }
 };
 </script>
