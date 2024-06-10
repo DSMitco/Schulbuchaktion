@@ -1,5 +1,4 @@
-<script setup lang="ts">
-
+<script setup>
 import { ref } from 'vue';
 import DataTablesCore from 'datatables.net-bs5';
 import DataTable from 'primevue/datatable';
@@ -21,33 +20,42 @@ import DocumentButton from "../components/DocumentButton.vue";
 --> löschen
 -- soll haben:
 --> duplizieren
-
-Wichtiger Link für CRUD:
-https://vue-crud.github.io/guide/crud/field-options.html#table
-
+<div class="dropdown">
+                    <button class="dropbtn">Options</button>
+                    <div class="dropdown-content">
+                      <a @click="editItem(slotProps.data)">Bearbeiten</a>
+                      <a @click="deleteItem(slotProps.data)">Löschen</a>
+                    </div>
+                  </div>
 
 */
-const test = ref([
-  {
-    Jahr: '2023/24',
-    Buchbezeichnung: 'Programming for Dummies',
-    Klasse: '4AHTIN',
-    Repetenten: 'Ja',
-    EBookORPlus: 'Ja',
-    crudAction: DocumentButton
-  },
-  {
-    Jahr: '2023/24',
-    Buchbezeichnung: 'Error 404? not anymore!',
-    Klasse: '4BHTIN',
-    Repetenten: 'Nein',
-    EBookORPlus: 'Ja',
-    crudAction: DocumentButton
-  }
-]);
+
+
+//TODO: Löschn über Documentbutton endlich hinkriegen!!!
+
+const orderListTestData = ref([
+    {
+      Jahr: '2023/24',
+      Buchbezeichnung: 'Programming for Dummies',
+      Klasse: '4AHTIN',
+      Repetenten: 'Ja',
+      EBookORPlus: 'Ja',
+      crudAction: DocumentButton
+    },
+    {
+      Jahr: '2023/24',
+      Buchbezeichnung: 'Error 404? not anymore!',
+      Klasse: '4BHTIN',
+      Repetenten: 'Nein',
+      EBookORPlus: 'Ja',
+      crudAction: DocumentButton
+    }
+  ]);
+
+
 
 function createNewItem(){
-  test.value.push({
+  orderListTestData.value.push({
     Jahr: '',
     Buchbezeichnung: '',
     Klasse: '',
@@ -56,23 +64,26 @@ function createNewItem(){
     crudAction: DocumentButton
   });
 }
-
-function deleteItem(item) {
-  const index = test.value.findIndex(i => i === item);
-  test.value.splice(index, 1);
+/*
+  function deleteItem(item) {
+   const index = orderListTestData.value.findIndex(i => i === item);
+  orderListTestData.value.splice(index, 1);
 }
+ */
 //<component :is="slotProps.data.crudAction"> </component>
+
 </script>
 
 <template>
 
     <div id="bestell_container">
       <h1>Bestellliste</h1>
-
+      <button class="CreateBTN" @click="createNewItem">Neu</button>
+      <button class="SaveBTN"> Speichern</button>
       <section class="sec">
         <div class="borderDiv">
           <div class="list">
-            <DataTable :value="test" tableStyle="min-width: 50rem; background-color: white">
+            <DataTable :value="orderListTestData" tableStyle="min-width: 50rem; background-color: white">
               <Column field="Jahr" header="Schuljahr"></Column>
               <Column field="Buchbezeichnung" header="Buchbezeichnung"></Column>
               <Column field="Klasse" header="Klasse"></Column>
@@ -80,14 +91,7 @@ function deleteItem(item) {
               <Column field="EBookORPlus" header="E-Book & E-Book-Plus"></Column>
               <Column field="crudAction"  header="">
                 <template #body="slotProps">
-                  <component :is="slotProps.data.crudAction"> </component>
-                  <div class="dropdown">
-                    <button class="dropbtn">Options</button>
-                    <div class="dropdown-content">
-                      <a @click="editItem(slotProps.data)">Bearbeiten</a>
-                      <a @click="deleteItem(slotProps.data)">Löschen</a>
-                    </div>
-                  </div>
+                  <component :is="slotProps.data.crudAction" :key="slotProps.data.Buchbezeichnung"> </component>
                 </template>
 
               </Column>
@@ -97,7 +101,7 @@ function deleteItem(item) {
 
 
       </section>
-<button class="LoneBTN" @click="createNewItem">Neu</button>
+
   </div>
 
 </template>
@@ -109,7 +113,15 @@ h1{
   padding-left: 10%;
 }
 
-.LoneBTN{
+.CreateBTN{
+  border: 2px solid #CCA3FD;
+  background-color: #652EA8;
+  font-size: large;
+  padding: 10px;
+  margin-left: 20%;
+  margin-top: 10px;
+}
+.SaveBTN{
   border: 2px solid #CCA3FD;
   background-color: #652EA8;
   font-size: large;
