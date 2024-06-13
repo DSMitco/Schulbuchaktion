@@ -26,8 +26,6 @@ const items = [
           <div class="social-links">
             <a href="https://www.htl-steyr.ac.at/" target="_blank" class="htl-steyr"></a>
             <a href="https://www.schulbuchaktion.at/list" target="_blank" class="sba"></a>
-            <a href="#"><i class="fab "></i></a>
-            <a href="#"><i class="fab "></i></a>
           </div>
         </div>
       </div>

@@ -14,7 +14,7 @@ class AuthService {
     }
 
     /**
-     * Authenticates a user by bearer token.
+     * Authenticates a user by bearer token
      */
     public function authenticateByAuthorizationHeader(Request $request): ?User {
         $bearerToken = $request->headers->get("Authorization");
