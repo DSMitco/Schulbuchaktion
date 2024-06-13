@@ -2,20 +2,39 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'primevue/resources/themes/aura-light-green/theme.css'
+import {onMounted, ref} from "vue";
+
+const orders = ref([]);
+
+const fetchClasses = async () => {
+
+  const response = await fetch('http://localhost:80/getOrderOverview');
+  const data = await response.json();
+  orders.value.push(data);
+  console.log(orders);
+}
+
+onMounted(async () => {
+  await fetchClasses();
+});
+
+
 
 </script>
 
 <template>
   <section class="sec">
     <div class="borderDiv">
-      <div class="list">
-        <DataTable :value="buecher" tableStyle="min-width: 50rem; background-color: white">
+      <div class="list" >
+      <div v-for="orderItem in orders">
+        <DataTable :value="orderItem" tableStyle="min-width: 50rem; background-color: white">
           <Column field="gesamtbudget" header="Gesamtbudget"></Column>
           <Column field="preis" header="Gesamter Preis"></Column>
           <Column field="abteilung" header="Abteilung"></Column>
           <Column field="prozent" header="Verbrauchtes Budget (prozentual)"></Column>
         </DataTable>
       </div>
+    </div>
     </div>
   </section>
 </template>
@@ -54,35 +73,3 @@ h1 {
 
 
 </style>
-
-
-<script>
-
-import DocumentButton from "@/components/DocumentButton.vue";
-
-const exampleData = [
-  {
-    gesamtbudget: '38.500€',
-    preis: '25.800€',
-    abteilung: 'Informationstechnologie und Netzwerktechnik',
-    prozent: '85.5%',
-
-  },
-  {
-    gesamtbudget: '45.000€',
-    preis: '45.000€',
-    abteilung: 'Elektronik',
-    prozent: '100%',
-  }
-];
-
-export default {
-  data() {
-    return {
-      buecher: exampleData
-    };
-  }
-};
-
-
-</script>

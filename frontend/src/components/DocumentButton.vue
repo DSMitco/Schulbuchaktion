@@ -8,11 +8,9 @@
   const menu = ref();
 
   const edit = () => {
-
     alert("Edit has been clicked");
   };
   const duplicate = () => {
-    
     alert("Duplicate has been clicked");
   };
   const deleteData = () => {

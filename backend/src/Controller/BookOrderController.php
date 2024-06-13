@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Bookorder;
+use App\Entity\Department;
 use App\Entity\Publisher;
 use App\Entity\Schoolclass;
 use App\Entity\Schoolgrade;
@@ -23,25 +24,13 @@ use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuild
 
 class BookOrderController extends AbstractController
 {
-    #[Route('order', name: 'order')]
-    public function index(Request $request, EntityManagerInterface $em, BookRepository $br): Response
+    #[Route('order/{id}/{classname}/{rep}', name: 'order')]
+    public function index(Request $request, EntityManagerInterface $em, BookRepository $br, $id, $classname, $rep): Response
     {
-        //$classId= $request->get('classId');
-        $classId = 1;
-        //$bookIds = $request->get('bookIds');
-        $bookId = 1;
-        $rep = "ja";
-        $ebook = true;
-        $ebookplus = false;
-        $teacherCopy = false;
+        $bo = $em->getRepository(Bookorder::class)->findOneBy(['id' => $id]);
 
-        $book = $em->getRepository(Book::class)->find($bookId);
+        $class = $em->getRepository(Schoolclass::class)->findOneBy(['name' => $classname]);
 
-        $class = $em->getRepository(Schoolclass::class)->find($classId);
-
-        $bo = new BookOrder();
-
-        $bo->setBook($book);
         $bo->setSchoolclass($class);
 
         if ($rep == "only") {
@@ -51,10 +40,6 @@ class BookOrderController extends AbstractController
         } else {
             $bo->setCount($class->getStudentsamount() + $class->getRepamount());
         }
-
-        $bo->setEbook($ebook);
-        $bo->setEbookplus($ebookplus);
-        $bo->setTeacherCopy($teacherCopy);
 
         $em->persist($bo);
         $em->flush();
@@ -102,4 +87,30 @@ class BookOrderController extends AbstractController
         }
         return $this->json($response);
     }
+
+    #[Route('getOrderOverview', name: 'getOrderOverview')]
+    public function getOrderOverview(EntityManagerInterface $em): Response
+    {
+        $departments = $em->getRepository(Department::class)->findAll();
+
+        $response = [];
+        foreach ($departments as $dep) {
+            $price = 0.0;
+            $price += $dep->getUsedbudget();
+            foreach ($dep->getSchoolclasses() as $class) {
+                foreach ($class->getBookorders() as $order) {
+                    $price += $order->getBook()->getBookprice() * $order->getCount();
+                }
+            }
+
+            $response[] = [
+                'gesamtbudget' => number_format($dep->getBudget() / 100, 2),
+                'preis' => number_format($price / 100, 2),
+                'abteilung' => $dep->getName(),
+                'prozent' => number_format(($price / $dep->getBudget()) * 100, 2),
+            ];
+        }
+        return $this->json($response);
+    }
+
 }
