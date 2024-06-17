@@ -1,13 +1,23 @@
 @import './base.css';
 
-/*
-.footer {
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+.footer {
+    flex-shrink: 0;
     width: 100%;
     position: absolute;
     bottom: 0;
 }
-*/
+
 .text {
     margin: 10px auto;
     max-width: 98%;
