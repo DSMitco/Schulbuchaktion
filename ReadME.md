@@ -7,19 +7,19 @@ Ein Programm für die Schulbuchaktion der HTL-Steyr
 3. Projekt öffnen<br>
 4. Im Ordner "frontend" Command "npm i vite" falls vite nicht vorhanden ist.<br>
 5. "npm run dev" ausführen um den port zu bekommen und den server local zu starten.<br>
-<p>
-(frontend)
-npm i vite@latest
-npm i vue-router@4
-npm i pinia
-npm install primevue@^3.4.0 primeicons@^4.1.0 –save
-npm install primevue
+<p><br>
+(frontend) <br>
+npm i vite@latest<br>
+npm i vue-router@4<br>
+npm i pinia<br>
+npm install primevue@^3.4.0 primeicons@^4.1.0 –save<br>
+npm install primevue<br>
 
-npm run dev 			im frontend
-(Backend)
-.env.nginx von .env.nginx.local kopieren
-docker starten
-docker-compose build	        im Backend .docker ordner wo die Dockerfiles sind
-docker-compose up
+npm run dev 			im frontend<br>
+(Backend)<br>
+.env.nginx von .env.nginx.local kopieren<br>
+docker starten<br>
+docker-compose build	        im Backend .docker ordner wo die Dockerfiles sind<br>
+docker-compose up<br>
 </p>
 
