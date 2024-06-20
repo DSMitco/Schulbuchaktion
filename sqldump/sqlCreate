@@ -1,0 +1,155 @@
+create table if not exists publisher
+(
+    publisher_id int auto_increment
+        primary key,
+    vnr          decimal      not null,
+    name         varchar(255) not null
+)
+    collate = utf8mb4_unicode_ci;
+
+create table if not exists schoolgrade
+(
+    id    int auto_increment
+        primary key,
+    grade decimal not null
+)
+    collate = utf8mb4_unicode_ci;
+
+create table if not exists user
+(
+    user_id    int auto_increment
+        primary key,
+    short_name varchar(255) not null,
+    first_name varchar(255) not null,
+    last_name  varchar(255) not null,
+    email      varchar(255) not null,
+    token      varchar(255) not null,
+    password   varchar(255) not null
+)
+    collate = utf8mb4_unicode_ci;
+
+create table if not exists department
+(
+    department_id      int auto_increment
+        primary key,
+    head_of_department int          null,
+    name               varchar(255) not null,
+    budget             decimal      not null,
+    used_budget        decimal      not null,
+    umew               decimal      not null,
+    constraint UNIQ_CD1DE18A150337F3
+        unique (head_of_department),
+    constraint FK_CD1DE18A150337F3
+        foreign key (head_of_department) references user (user_id)
+)
+    collate = utf8mb4_unicode_ci;
+
+create table if not exists schoolclass
+(
+    schoolclass_id  int auto_increment
+        primary key,
+    department_id   int          null,
+    name            varchar(255) not null,
+    grade           decimal      not null,
+    students_amount decimal      not null,
+    rep_amount      decimal      not null,
+    used_budget     decimal      not null,
+    budget          decimal      not null,
+    year            decimal      not null,
+    profile         decimal      not null,
+    constraint FK_F146B669AE80F5DF
+        foreign key (department_id) references department (department_id)
+)
+    collate = utf8mb4_unicode_ci;
+
+create index IDX_F146B669AE80F5DF
+    on schoolclass (department_id);
+
+create table if not exists subject
+(
+    subject_id         int auto_increment
+        primary key,
+    head_of_subject_id int                                    null,
+    short_name         varchar(255) default 'Nicht Angegeben' not null,
+    full_name          varchar(255)                           not null,
+    constraint UNIQ_FBCE3E7ADA200AFE
+        unique (head_of_subject_id),
+    constraint FK_FBCE3E7ADA200AFE
+        foreign key (head_of_subject_id) references user (user_id)
+)
+    collate = utf8mb4_unicode_ci;
+
+create table if not exists book
+(
+    id             int auto_increment
+        primary key,
+    subject_id     int                  null,
+    publisher_id   int                  null,
+    bnr            decimal              not null,
+    short_title    varchar(255)         not null,
+    title          varchar(255)         not null,
+    listtype       decimal              null,
+    school_form    decimal              not null,
+    teacherversion tinyint(1)           null,
+    info           longtext             null,
+    ebook          tinyint(1) default 0 not null,
+    ebook_plus     tinyint(1) default 0 not null,
+    mainbook_id    decimal              null,
+    bookprice      double               null,
+    constraint FK_CBE5A33123EDC87
+        foreign key (subject_id) references subject (subject_id),
+    constraint FK_CBE5A33140C86FCE
+        foreign key (publisher_id) references publisher (publisher_id)
+)
+    collate = utf8mb4_unicode_ci;
+
+create index IDX_CBE5A33123EDC87
+    on book (subject_id);
+
+create index IDX_CBE5A33140C86FCE
+    on book (publisher_id);
+
+create table if not exists book_schoolgrade
+(
+    book_id        int not null,
+    schoolgrade_id int not null,
+    primary key (book_id, schoolgrade_id),
+    constraint FK_17A04EBE16A2B381
+        foreign key (book_id) references book (id)
+            on delete cascade,
+    constraint FK_17A04EBE187E724D
+        foreign key (schoolgrade_id) references schoolgrade (id)
+            on delete cascade
+)
+    collate = utf8mb4_unicode_ci;
+
+create index IDX_17A04EBE16A2B381
+    on book_schoolgrade (book_id);
+
+create index IDX_17A04EBE187E724D
+    on book_schoolgrade (schoolgrade_id);
+
+create table if not exists bookorder
+(
+    book_order_id  int auto_increment
+        primary key,
+    schoolclass_id int                  null,
+    book_id        int                  not null,
+    count          decimal              null,
+    teacher_copy   tinyint(1) default 0 null,
+    ebook          tinyint(1) default 0 null,
+    ebook_plus     tinyint(1) default 0 null,
+    schoolyear     varchar(255)         null,
+    constraint FK_B191A88B16A2B381
+        foreign key (book_id) references book (id),
+    constraint FK_B191A88BC67D8F5
+        foreign key (schoolclass_id) references schoolclass (schoolclass_id)
+)
+    collate = utf8mb4_unicode_ci;
+
+create index IDX_B191A88B16A2B381
+    on bookorder (book_id);
+
+create index IDX_B191A88BC67D8F5
+    on bookorder (schoolclass_id);
+
