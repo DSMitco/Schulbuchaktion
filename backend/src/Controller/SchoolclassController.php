@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Schoolclass;
 use App\Repository\SchoolclassRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +42,8 @@ class SchoolclassController extends AbstractController
                 'department' => $class->getDepartment()->getName(),
                 'studentsamount' => $class->getStudentsamount(),
                 'repamount' => $class->getRepamount(),
-                'year' => $class->getYear()
+                'year' => $class->getYear(),
+
             ];
         }
         return $this->json($response);
@@ -68,5 +70,13 @@ class SchoolclassController extends AbstractController
         $classID = 1;
         return new Response('Class ' . $classID . ' changed');
     }
+    #[Route('deleteClass/{classID}', name: 'deleteClass')]
+    public function deleteClass($classID, EntityManagerInterface $em): Response
+    {
+        $class = $em->getRepository(Schoolclass::class)->find($classID);
+        $em->remove($class);
+        $em->flush();
 
+        return new Response('Deleted Class');
+    }
 }

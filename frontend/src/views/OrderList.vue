@@ -14,26 +14,6 @@ import RepetentenDropDown from "@/components/RepetentenDropDown.vue";
 import KlasseDropDown from "@/components/KlasseDropDown.vue";
 import BuchDropDown from "@/components/BuchDropDown.vue";
 
-const test = [
-  {
-    Jahr: '2023/24',
-    Buchbezeichnung: BuchDropDown,
-    Klasse: KlasseDropDown,
-    Repetenten: RepetentenDropDown,
-    EBook: CheckboxComponent,
-    EBookPlus: CheckboxComponent,
-    crudAction: DocumentButton
-  },
-  {
-    Jahr: '2023/24',
-    Buchbezeichnung: BuchDropDown,
-    Klasse: KlasseDropDown,
-    Repetenten: RepetentenDropDown,
-    EBook: CheckboxComponent,
-    EBookPlus: CheckboxComponent,
-    crudAction: DocumentButton
-  }
-];
 const orders = ref([]);
 
 const fetchOrders = async () => {
@@ -62,7 +42,7 @@ const filters = ref({
       <div class="borderDiv">
         <div class="list">
           <div v-for="order in orders">
-          <DataTable v-model:filters="filters" :value="test" tableStyle="min-width: 50rem; background-color: white"
+          <DataTable v-model:filters="filters" :value="order" tableStyle="min-width: 50rem; background-color: white"
                      filterDisplay="row">
             <Column field="Jahr" header="Schuljahr">
               <template #filter="{ filterModel, filterCallback }">
@@ -74,9 +54,6 @@ const filters = ref({
               <template #filter="{ filterModel, filterCallback }">
                 <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter"
                            placeholder="Suche nach Buchbezeichnung"/>
-              </template>
-              <template #body="slotProps">
-                <BuchDropDown/>
               </template>
             </Column>
             <Column field="Klasse" header="Klasse">
@@ -95,24 +72,24 @@ const filters = ref({
             </Column>
             <Column field="E-Book" header="E-Book">
               <template #body="slotProps">
-                <component :is="slotProps.data.EBook"></component>
+                <CheckboxComponent :isChecked="slotProps.data.EBook"></CheckboxComponent>
               </template>
             </Column>
             <Column field="E-Book-Plus" header="E-Book-Plus">
               <template #body="slotProps">
-                <component :is="slotProps.data.EBookPlus"></component>
+                <CheckboxComponent :isChecked="slotProps.data.EBookPlus"></CheckboxComponent>
               </template>
             </Column>
-            <Column field="crudAction" header="">
+            <Column field="crudAction"  header="">
               <template #body="slotProps">
-                <DocumentButton/>
+                <DocumentButton :selectedID="slotProps.data.id" type="orderList"/>
               </template>
             </Column>
           </DataTable>
           </div>
         </div>
       </div>
-    </section>
+      </section>
   </div>
 
 </template>
@@ -162,6 +139,7 @@ ul{
   display:flex;
   justify-content:center;
   align-items: center;
+  margin-bottom: 1%;
 }
 
 button{

@@ -72,6 +72,16 @@ class BookOrderController extends AbstractController
         return new Response('Added Book to order');
     }
 
+    #[Route('deleteBook/{bnr}', name: 'deleteBook')]
+    public function deleteBook($bnr, EntityManagerInterface $em): Response
+    {
+        $book = $em->getRepository(Bookorder::class)->find($bnr);
+        $em->remove($book);
+        $em->flush();
+
+        return new Response('Deleted Book to order');
+    }
+
     #[Route('getBookOrders', name: 'getBooksOrders')]
     public function getBookOrders(EntityManagerInterface $em): Response
     {
@@ -79,10 +89,23 @@ class BookOrderController extends AbstractController
 
         $response = [];
         foreach ($bookOrders as $bookOrder) {
+            if($bookOrder->getBook()->getEbook() == 1){
+                $ebook = true;
+            }else{
+                $ebook = false;
+            }
+
+            if($bookOrder->getBook()->getEbookplus() == 1){
+                $ebookplus = true;
+            }else{
+                $ebookplus = false;
+            }
             $response[] = [
                 'id' => $bookOrder->getId(),
                 'Buchbezeichnung' => $bookOrder->getBook()->getTitle(),
                 'Jahr' => $bookOrder->getSchoolyear(),
+                'EBook' => $ebook,
+                'EBookPlus' => $ebookplus,
             ];
         }
         return $this->json($response);
@@ -109,6 +132,7 @@ class BookOrderController extends AbstractController
                 'abteilung' => $dep->getName(),
                 'prozent' => number_format(($price / $dep->getBudget()) * 100, 2),
             ];
+
         }
         return $this->json($response);
     }

@@ -5,6 +5,50 @@
   import TieredMenu from "primevue/tieredmenu";
   import {ref} from "vue";
 
+  const props = defineProps({
+    selectedID: Number,
+    type: String
+  })
+  const temp = ref(props.selectedID)
+
+  const listType = ref(props.type)
+
+  const addBook = async (bnr) => {
+    const response = await fetch(`http://localhost:80/addBook/${bnr}`, {
+      method: 'POST',
+    });
+    const data = await response.text();
+    console.log(data);
+    location.reload();
+  }
+
+  const deleteBook = async (bnr) => {
+    const response = await fetch(`http://localhost:80/deleteBook/${bnr}`, {
+      method: 'POST',
+    });
+    const data = await response.text();
+    console.log(data);
+    location.reload();
+  }
+
+  const addClass = async (bnr) => {
+    const response = await fetch(`http://localhost:80/addClass/${classid}`, {
+      method: 'POST',
+    });
+    const data = await response.text();
+    console.log(data);
+    location.reload();
+  }
+
+  const deleteClass = async (bnr) => {
+    const response = await fetch(`http://localhost:80/deleteClass/${classid}`, {
+      method: 'POST',
+    });
+    const data = await response.text();
+    console.log(data);
+    location.reload();
+  }
+
   const menu = ref();
 
   const edit = () => {
@@ -12,13 +56,26 @@
   };
   const duplicate = () => {
     alert("Duplicate has been clicked");
+    alert(listType.value)
+    if(listType.value === "orderList"){
+      alert(temp.value)
+      addBook(temp.value)
+    }else{
+      addClass(temp.value)
+    }
+
   };
   const deleteData = () => {
     alert("Delete has been clicked");
+    alert(listType.value)
+    if(listType.value === "orderList"){
+    deleteBook(temp.value)
+    }else{
+      deleteClass(temp.value)
+    }
 
   };
   const items = ref([
-
   {
     label: 'Bearbeiten',
     icon: 'pi pi-file-edit',

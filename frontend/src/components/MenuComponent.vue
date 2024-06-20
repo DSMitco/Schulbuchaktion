@@ -5,7 +5,7 @@ import { RouterLink } from "vue-router";
 const items = [
   {label: 'Buchübersicht', to: 'bookList'},
   {label: 'Bestellliste', to: 'orderList'},
-  {label: 'Bestellübersicht',  to: 'orderOverView'},
+  {label: 'Budgetübersicht',  to: 'orderOverView'},
   {label: 'Klassenübersicht',  to: 'classList'},
 
 ];

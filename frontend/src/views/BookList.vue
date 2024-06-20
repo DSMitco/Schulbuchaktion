@@ -44,7 +44,8 @@ const filters = ref({
   <section class="sec">
     <div class="borderDiv">
       <div class="list">
-        <DataTable v-model:filters="filters" :value="books" tableStyle="min-width: 50rem; background-color: white" dataKey="id" filterDisplay="row" :loading="loading"
+        <div v-for="bookItem in books">
+        <DataTable :value="bookItem" v-model:filters="filters" tableStyle="min-width: 50rem; background-color: white" dataKey="id" filterDisplay="row" :loading="loading"
                    :globalFilterFields="['subject', 'title']">
           <Column field="title" header="Buchtitel">
             <template #filter="{ filterModel, filterCallback }">
@@ -69,13 +70,11 @@ const filters = ref({
           <Column field="price" header="Preis"></Column>
           <Column field="crudAction" header="">
             <template #body="slotProps">
-              <Button @click="addBook(slotProps.data.bnr)">Bestellen</Button>
+              <Button @click="addBook(slotProps.data.bnr)" id="orderBtn">Bestellen</Button>
             </template>
           </Column>
         </DataTable>
-      </div>
-
-
+          </div>
 
     </div>
     </div>
@@ -109,6 +108,12 @@ const filters = ref({
 }
 .titleStyle{
   width:50rem
+}
+
+#orderBtn{
+  background-color: #652EA8;
+  height:40px;
+  border-radius:10px;
 }
 
 

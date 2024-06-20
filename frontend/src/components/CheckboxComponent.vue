@@ -1,15 +1,17 @@
 
 <script setup>
-import { ref } from "vue";
+import {ref, watch} from "vue";
 import Checkbox from "primevue/checkbox";
 
-const checked = ref();
-
+const props = defineProps({
+  isChecked: Boolean
+})
+const temp = ref(props.isChecked)
 </script>
 
 <template>
   <div class="card flex justify-content-center">
-    <Checkbox v-model="checked" :binary="true" disabled />
+    <Checkbox v-model="temp" :binary="true" disabled />
   </div>
 </template>
 

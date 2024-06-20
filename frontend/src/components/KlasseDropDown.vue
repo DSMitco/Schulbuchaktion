@@ -8,7 +8,7 @@ const classes = ref([]);
 const fetchClasses = async () => {
   const response = await fetch('http://localhost:80/getClassNames');
   const data = await response.json();
-  classes.value = [...data];
+  classes.value.push(data);
   console.log(classes);
 }
 
@@ -19,8 +19,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="card flex justify-content-center">
-    <Dropdown v-model="selectedClass" variant="filled" :options="classes" optionLabel="name" placeholder="Klasse auswählen" class="w-full md:w-14rem" />
+  <div class="card flex justify-content-center" v-for="classItem in classes">
+    <Dropdown v-model="selectedClass" variant="filled" :options="classItem" optionLabel="name" placeholder="Klasse auswählen" class="w-full md:w-14rem" />
   </div>
 </template>
 
