@@ -2,15 +2,21 @@
 import { ref, onMounted } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import 'primevue/resources/themes/aura-light-green/theme.css'
+import 'primevue/resources/themes/aura-light-green/theme.css';
+import 'primevue/resources/primevue.min.css';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import { FilterMatchMode } from 'primevue/api';
 
 const books = ref([]);
+const loading = ref(true);
 
 const fetchBooks = async () => {
+
   const response = await fetch('http://localhost:80/getBooksOverview');
   const data = await response.json();
   books.value.push(data);
-  console.log(books);
+  loading.value = false;
 }
 
 const addBook = async (bnr) => {
@@ -25,26 +31,52 @@ onMounted(async () => {
   await fetchBooks();
 });
 
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  subject: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  title: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  bnr: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  publisher: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+});
 </script>
 
 <template>
   <section class="sec">
     <div class="borderDiv">
-    <div class="list" >
-      <div v-for="bookItem in books">
-      <DataTable :value="bookItem" tableStyle="min-width: 50rem; background-color: white">
-        <Column field="title" header="Buchtitel" class="titleStyle"></Column>
-        <Column field="bnr" header="Buchnummer"></Column>
-        <Column field="subject" header="Fach"></Column>
-        <Column field="publisher" header="Verlag"></Column>
-        <Column field="price" header="Preis"></Column>
-        <Column field="crudAction" header="">
-          <template #body="slotProps">
-            <Button @click="addBook(slotProps.data.bnr)">Bestellen</Button>
-          </template>
-        </Column>
-      </DataTable>
+      <div class="list">
+        <DataTable v-model:filters="filters" :value="books" tableStyle="min-width: 50rem; background-color: white" dataKey="id" filterDisplay="row" :loading="loading"
+                   :globalFilterFields="['subject', 'title']">
+          <Column field="title" header="Buchtitel">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Suche nach Titel" />
+            </template>
+          </Column>
+          <Column field="bnr" header="Buchnummer">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Suche nach Buchnummer" />
+            </template>
+          </Column>
+          <Column field="subject" header="Fach">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Suche nach Fach" />
+            </template>
+          </Column>
+          <Column field="publisher" header="Verlag">
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Suche nach Verleger" />
+            </template>
+          </Column>
+          <Column field="price" header="Preis"></Column>
+          <Column field="crudAction" header="">
+            <template #body="slotProps">
+              <Button @click="addBook(slotProps.data.bnr)">Bestellen</Button>
+            </template>
+          </Column>
+        </DataTable>
       </div>
+
+
+
     </div>
     </div>
   </section>

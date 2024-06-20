@@ -1,9 +1,11 @@
 <script setup>
+import NavComponent from "@/components/NavComponent.vue";
+import LoginView from "@/views/LoginView.vue";
+import Imprint from "@/views/Imprint.vue";
 import Nav from "@/components/NavComponent.vue";
 import Footer from "@/components/FooterComponent.vue"
 import MenuComponent from "@/components/MenuComponent.vue";
 
-/*
 const fetchData = async () => {
   const response = await fetch('http://localhost:80/doRead');
   const data = await response.text();
@@ -11,7 +13,7 @@ const fetchData = async () => {
 }
 
 fetchData();
- */
+
 </script>
 
 <template>

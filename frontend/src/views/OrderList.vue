@@ -2,7 +2,10 @@
 import { ref, onMounted } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import 'primevue/resources/themes/aura-light-green/theme.css'
+import 'primevue/resources/themes/aura-light-green/theme.css';
+import 'primevue/resources/primevue.min.css';
+import InputText from 'primevue/inputtext';
+import { FilterMatchMode } from 'primevue/api';
 import DocumentButton from "../components/DocumentButton.vue";
 
 import CheckboxComponent from "@/components/CheckboxComponent.vue";
@@ -10,22 +13,27 @@ import DropDownComponent from "@/components/KlasseDropDown.vue";
 import RepetentenDropDown from "@/components/RepetentenDropDown.vue";
 import KlasseDropDown from "@/components/KlasseDropDown.vue";
 import BuchDropDown from "@/components/BuchDropDown.vue";
-/*
---[OPTIONEN] muss haben:
---> Jahr
---> Buchbezeichnung
---> Klasse auswählen
---> Repetenten auswahl? (Repetent: Ja, Nein, nur für Repetenten bestellen)
---> Auswahl E-Book & E-Book-Plus
 
---[FUNKTIONEN] muss haben:
---> erstellen
---> bearbeiten
---> speichern
---> löschen
--- soll haben:
---> duplizieren
-*/
+const test = [
+  {
+    Jahr: '2023/24',
+    Buchbezeichnung: BuchDropDown,
+    Klasse: KlasseDropDown,
+    Repetenten: RepetentenDropDown,
+    EBook: CheckboxComponent,
+    EBookPlus: CheckboxComponent,
+    crudAction: DocumentButton
+  },
+  {
+    Jahr: '2023/24',
+    Buchbezeichnung: BuchDropDown,
+    Klasse: KlasseDropDown,
+    Repetenten: RepetentenDropDown,
+    EBook: CheckboxComponent,
+    EBookPlus: CheckboxComponent,
+    crudAction: DocumentButton
+  }
+];
 const orders = ref([]);
 
 const fetchOrders = async () => {
@@ -38,50 +46,73 @@ const fetchOrders = async () => {
 onMounted(async () => {
   await fetchOrders();
 });
+const active = ref(false);
+
+const filters = ref({
+  global: {value: null, matchMode: FilterMatchMode.CONTAINS},
+  Jahr: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+  Buchbezeichnung: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+  Klasse: {value: null, matchMode: FilterMatchMode.STARTS_WITH}
+});
 </script>
 
 <template>
-    <div id="bestell_container">
-      <section class="sec">
-        <div class="borderDiv">
-          <div class="list">
-            <div v-for="order in orders">
-            <DataTable :value="order" tableStyle="min-width: 50rem; background-color: white">
-              <Column field="Jahr" header="Schuljahr"></Column>
-              <Column field="Buchbezeichnung" header="Buchbezeichnung">
-              </Column>
-              <Column field="Klasse" header="Klasse">
-                <template #body="slotProps">
-                  <KlasseDropDown/>
-                </template>
-              </Column>
-              <Column field="Repetenten" header="Repetenten">
-                <template #body="slotProps">
-                  <RepetentenDropDown/>
-                </template>
-              </Column>
-              <Column field="E-Book" header="E-Book">
-                <template #body="slotProps">
-                  <component :is="slotProps.data.EBookPlus"> </component>
-                </template>
-              </Column>
-              <Column field="E-Book-Plus" header="E-Book-Plus">
-                <template #body="slotProps">
-                  <component :is="slotProps.data.EBookPlus"> </component>
-                </template>
-              </Column>
-
-              <Column field="crudAction"  header="">
-                <template #body="slotProps">
-                  <DocumentButton/>
-                </template>
-
-              </Column>
-            </DataTable>
+  <div id="bestell_container">
+     <section class="sec">
+      <div class="borderDiv">
+        <div class="list">
+          <div v-for="order in orders">
+          <DataTable v-model:filters="filters" :value="test" tableStyle="min-width: 50rem; background-color: white"
+                     filterDisplay="row">
+            <Column field="Jahr" header="Schuljahr">
+              <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter"
+                           placeholder="Suche nach Schuljahr"/>
+              </template>
+            </Column>
+            <Column field="Buchbezeichnung" header="Buchbezeichnung">
+              <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter"
+                           placeholder="Suche nach Buchbezeichnung"/>
+              </template>
+              <template #body="slotProps">
+                <BuchDropDown/>
+              </template>
+            </Column>
+            <Column field="Klasse" header="Klasse">
+              <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter"
+                           placeholder="Suche nach Klasse"/>
+              </template>
+              <template #body="slotProps">
+                <KlasseDropDown/>
+              </template>
+            </Column>
+            <Column field="Repetenten" header="Repetenten">
+              <template #body="slotProps">
+                <RepetentenDropDown/>
+              </template>
+            </Column>
+            <Column field="E-Book" header="E-Book">
+              <template #body="slotProps">
+                <component :is="slotProps.data.EBook"></component>
+              </template>
+            </Column>
+            <Column field="E-Book-Plus" header="E-Book-Plus">
+              <template #body="slotProps">
+                <component :is="slotProps.data.EBookPlus"></component>
+              </template>
+            </Column>
+            <Column field="crudAction" header="">
+              <template #body="slotProps">
+                <DocumentButton/>
+              </template>
+            </Column>
+          </DataTable>
           </div>
         </div>
       </div>
-      </section>
+    </section>
   </div>
 
 </template>
