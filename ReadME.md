@@ -7,7 +7,7 @@ Ein Programm für die Schulbuchaktion der HTL-Steyr
 3. Projekt öffnen<br>
 4. Im Ordner "frontend" Command "npm i vite" falls vite nicht vorhanden ist.<br>
 5. "npm run dev" ausführen um den port zu bekommen und den server local zu starten.<br>
-
+<p>
 (frontend)
 npm i vite@latest
 npm i vue-router@4
@@ -21,4 +21,5 @@ npm run dev 			im frontend
 docker starten
 docker-compose build	        im Backend .docker ordner wo die Dockerfiles sind
 docker-compose up
+</p>
 
