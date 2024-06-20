@@ -1,0 +1,9 @@
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (7, null, 3, null, null, null, null, '2024/25');
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (8, null, 6, null, null, null, null, '2024/25');
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (9, null, 6, null, null, null, null, '2024/25');
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (10, null, 7, null, null, null, null, '2024/25');
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (11, null, 10, null, null, null, null, '2024/25');
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (14, null, 4, null, null, null, null, '2024/25');
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (15, null, 2, null, null, null, null, '2024/25');
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (16, null, 2, null, null, null, null, '2024/25');
+INSERT INTO app_db.bookorder (book_order_id, schoolclass_id, book_id, count, teacher_copy, ebook, ebook_plus, schoolyear) VALUES (17, null, 17, null, null, null, null, '2024/25');
